@@ -4,7 +4,7 @@
  * `/simPl-setup.exe` for a file placed in `public/`.
  */
 export const windowsDownloadUrl: string | null =
-  'https://github.com/Tikkaaa3/simPl-reader/releases/download/v0.1.0/simPl-0.1.0-windows-x64-setup.exe';
+  'https://github.com/Tikkaaa3/simPl-reader/releases/download/v0.1.1/simPl-0.1.1-windows-x64-setup.exe';
 
 function isSafeDownloadURL(url: string): boolean {
   // A site-relative path is served from this origin and is safe to link.
