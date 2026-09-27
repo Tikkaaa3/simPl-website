@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import darkShot from '../assets/app-preview-dark.png';
+import readingShot from '../assets/app-preview-reading.png';
+import lightShot from '../assets/app-preview-light.png';
+
+const slides = [
+  { src: darkShot, alt: 'The simPl library in dark appearance' },
+  { src: readingShot, alt: 'Reading a book in simPl' },
+  { src: lightShot, alt: 'The simPl library in light appearance' },
+];
+const count = slides.length;
+const nextIndex = (index: number) => (index + 1) % count;
+const prevIndex = (index: number) => (index - 1 + count) % count;
+---
+
+<figure class="app-preview" aria-label={`simPl screenshots, ${count} images`}>
+  {slides.map((_, index) => (
+    <input
+      class="app-preview-input"
+      type="radio"
+      name="app-preview"
+      id={`app-preview-${index + 1}`}
+      checked={index === 0}
+      aria-label={`Screenshot ${index + 1} of ${count}`}
+    />
+  ))}
+
+  <div class="app-preview-track">
+    {slides.map((slide) => (
+      <div class="app-preview-slide">
+        <Image
+          src={slide.src}
+          alt={slide.alt}
+          widths={[480, 832, 1280, 1664]}
+          sizes="(max-width: 880px) calc(100vw - 48px), 832px"
+          format="webp"
+          quality={85}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    ))}
+  </div>
+
+  <div class="app-preview-nav" aria-hidden="true">
+    {slides.map((_, index) => (
+      <>
+        <label
+          class="app-preview-arrow prev"
+          for={`app-preview-${prevIndex(index) + 1}`}
+          data-current={index + 1}
+        >
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18">
+            <path d="M12.5 4.5 7 10l5.5 5.5" />
+          </svg>
+        </label>
+        <label
+          class="app-preview-arrow next"
+          for={`app-preview-${nextIndex(index) + 1}`}
+          data-current={index + 1}
+        >
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="18" height="18">
+            <path d="m7.5 4.5 5.5 5.5-5.5 5.5" />
+          </svg>
+        </label>
+      </>
+    ))}
+  </div>
+</figure>
+
+<style>
+  .app-preview {
+    position: relative;
+    width: 100%;
+    max-width: 52rem;
+    aspect-ratio: 16 / 9;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--surface-border);
+    border-radius: 0.75rem;
+    background: var(--surface);
+  }
+  .app-preview-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .app-preview:has(.app-preview-input:focus-visible) {
+    outline: 2px solid var(--foreground);
+    outline-offset: 6px;
+  }
+
+  .app-preview-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 320ms ease;
+  }
+  #app-preview-1:checked ~ .app-preview-track { transform: translateX(0); }
+  #app-preview-2:checked ~ .app-preview-track { transform: translateX(-100%); }
+  #app-preview-3:checked ~ .app-preview-track { transform: translateX(-200%); }
+
+  .app-preview-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+  }
+  .app-preview-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .app-preview-nav {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .app-preview-arrow {
+    position: absolute;
+    top: 50%;
+    display: none;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-top: -1.25rem;
+    border: 1px solid var(--control-border);
+    border-radius: 9999px;
+    background: var(--control-background);
+    color: var(--foreground);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 140ms ease, border-color 140ms ease;
+  }
+  .app-preview-arrow.prev { left: 0.9rem; }
+  .app-preview-arrow.next { right: 0.9rem; }
+  .app-preview-arrow:hover { border-color: var(--muted); }
+
+  #app-preview-1:checked ~ .app-preview-nav .app-preview-arrow[data-current='1'],
+  #app-preview-2:checked ~ .app-preview-nav .app-preview-arrow[data-current='2'],
+  #app-preview-3:checked ~ .app-preview-nav .app-preview-arrow[data-current='3'] {
+    display: grid;
+  }
+  .app-preview:hover .app-preview-arrow,
+  .app-preview:focus-within .app-preview-arrow {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app-preview-track { transition: none; }
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import DownloadButton from '../components/DownloadButton.astro';
+import AppPreview from '../components/AppPreview.astro';
+import Features from '../components/Features.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+const title = 'simPl — A local book reader for Windows';
+const description = 'A lightweight, local book reader for Windows. Your books stay on your computer. Free to use, with no account required.';
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c0c0c" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="simPl" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <ThemeToggle />
+    <main class="page-shell" id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">simPl</h1>
+        <p class="hero-description">Your local book reader.</p>
+        <DownloadButton />
+      </section>
+      <AppPreview />
+      <Features />
+      <footer class="page-footer">No account. No tracking. Your books stay on your device.</footer>
+    </main>
+  </body>
+</html>
