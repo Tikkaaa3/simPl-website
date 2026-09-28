@@ -21,9 +21,11 @@ npm run preview
 
 ## Enable downloads
 
-The Windows download is intentionally disabled while the installer is unavailable.
-Set `windowsDownloadUrl` in `src/config/product.ts` to the actual HTTPS release asset
-URL and rebuild. The disabled button becomes a real download link automatically.
+The Windows download currently points to the v0.1.2 official installer.
+Keep `windowsDownloadUrl`, `releaseVersion`, and `downloadSize` in
+`src/config/product.ts` aligned when updating the release. Set the URL to `null`
+to show the unavailable state. The displayed size is the installer download,
+not the installed application's size.
 
 You can also host the installer on this site: place the file in `public/`
 (for example `public/simPl-setup.exe`) and set
@@ -31,26 +33,37 @@ You can also host the installer on this site: place the file in `public/`
 URLs are both accepted; the link downloads the file instead of navigating to it.
 GitHub Releases can host the installer independently of the website.
 
-Do not add supported formats, version numbers, or performance measurements until
-they are confirmed for the release.
+Use confirmed product capabilities and release metadata. Do not publish
+performance figures until the shipping build has been measured.
+
+## Product and licensing copy
+
+Official releases are free for personal and professional use under the reader's
+`LICENSE-BINARY.txt`. The source is separately available under PolyForm
+Noncommercial 1.0.0 (`LICENSE.md`); describe it as **source-available**.
+The download area links to the release terms; the FAQ and footer link to both
+sets of terms.
 
 ## Application screenshots
 
-The frame below the download area is a no-JavaScript gallery driven by hidden
-radio inputs and `label` arrows (see `src/components/AppPreview.astro`). It shows
-three real 16:9 screenshots and reveals left/right arrows on hover or keyboard
-focus.
+The frame below the download area is a no-JavaScript gallery with always-visible
+radio labels (see `src/components/AppPreview.astro`). It opens on the reading
+view and offers library and light-appearance previews, each with a caption.
+Native radio controls support keyboard arrow navigation. Only the selected
+figure is displayed, including in the accessibility tree.
 
 Replace the images in `src/assets/` and rebuild:
 
-- `app-preview-dark.png` — library, dark appearance (first slide)
-- `app-preview-reading.png` — reading view
+- `app-preview-reading.png` — reading view (first preview)
+- `app-preview-dark.png` — library, dark appearance
 - `app-preview-light.png` — library, light appearance
 
 Use real app captures at 1918 × 1078 (16:9); Astro generates responsive WebP
-variants locally. To change the order or add a slide, edit the `slides` array in
-`AppPreview.astro`; the track and arrow rules use three states, so a different
-count also needs the `#app-preview-*:checked` rules updated.
+variants locally. To change the order or add a preview, edit the `slides` array in
+`AppPreview.astro`; a different count also needs the `:has(#app-preview-*:checked)`
+visibility rules updated. The first image loads eagerly; the others load lazily.
+PDF modes are explained in the FAQ until real Document and Book view captures
+are available; do not repurpose an EPUB screenshot as a PDF comparison.
 
 ## Hosting
 
@@ -95,9 +108,10 @@ live in the reader repository.
 ## Design
 
 Neutral monochrome colors, self-hosted Geist, and a centered composition:
-the simPl wordmark, one short description, the Windows download button, a
-wide frame reserved for the real application screenshot, three short feature
-notes, and a one-line privacy footer.
+the simPl wordmark, a short product introduction, Windows download and source
+links, a real screenshot gallery, three feature notes, a compact FAQ, and
+project/license links.
+Gallery selection, theme switching, and disclosures work without JavaScript.
 Edit the tokens in `src/styles/global.css` to change the visual direction.
 
 ### Light and dark appearance

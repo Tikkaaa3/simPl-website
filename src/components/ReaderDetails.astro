@@ -1,0 +1,27 @@
+---
+import { releaseLicenseUrl, sourceLicenseUrl, releaseUrl } from '../config/product';
+---
+
+<section class="faq content-section" aria-labelledby="faq-title">
+  <h2 id="faq-title">A few useful details.</h2>
+  <details>
+    <summary>Which files can I read?</summary>
+    <div class="details-body"><p>PDF, DRM-free reflowable EPUB 2/3, and local HTML/XHTML files. Add a document or drop it into the window. DRM-protected and fixed-layout EPUB books are not supported. Books shown in the previews are not included.</p></div>
+  </details>
+  <details>
+    <summary>How are PDFs shown?</summary>
+    <div class="details-body"><p>Two ways, and you can switch without losing your page. Document view keeps the original layout, images and typography, a natural fit for papers, tables and illustrated documents. Book view brings the text and extracted illustrations into simPl’s quieter reading style.</p><p>Book view needs a PDF text layer. For scans and complex layouts, use Document view.</p></div>
+  </details>
+  <details>
+    <summary>Do I need an account or an internet connection?</summary>
+    <div class="details-body"><p>No account is needed. Once installed, simPl reads your local books offline and saves your library, preferences and reading position on your computer.</p></div>
+  </details>
+  <details>
+    <summary>Can I use simPl at work?</summary>
+    <div class="details-body"><p>Yes. Official, unmodified releases are free for personal and professional use, including use by companies and schools. See the <a href={releaseLicenseUrl}>official release terms</a>.</p><p>The code is source-available under <a href={sourceLicenseUrl}>PolyForm Noncommercial 1.0.0</a>. That separate license applies to source code and builds you make yourself.</p></div>
+  </details>
+  <details>
+    <summary>What should I know before installing?</summary>
+    <div class="details-body"><p>The download is for Windows x64 and installs for your Windows account. The current installer is not code-signed, so Windows SmartScreen may show a warning. Release details and a SHA-256 checksum are available in the <a href={releaseUrl}>release notes</a>.</p></div>
+  </details>
+</section>

@@ -1,19 +1,20 @@
 ---
+import { repositoryUrl, downloadSize } from '../config/product';
 ---
 
 <section class="features" aria-label="Why simPl">
   <ul>
     <li>
-      <h2>Offline by default</h2>
-      <p>Your books stay on your computer. Nothing is uploaded.</p>
+      <h2>Lightweight by design</h2>
+      <p>A native Windows reader built with Rust. A {downloadSize} download that opens quickly and stays out of the way.</p>
     </li>
     <li>
-      <h2>HTML, PDF, EPUB</h2>
-      <p>Open local files directly, with no conversion or account.</p>
+      <h2>Local and offline</h2>
+      <p>Your books and reading progress stay on your computer. No account. Nothing to upload.</p>
     </li>
     <li>
-      <h2>Resume where you stopped</h2>
-      <p>simPl saves your place and returns you to it.</p>
+      <h2>Source-available</h2>
+      <p>See how your reader works. The code is <a href={repositoryUrl}>on GitHub</a>.</p>
     </li>
   </ul>
 </section>

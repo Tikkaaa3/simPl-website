@@ -1,8 +1,9 @@
 ---
-import { windowsDownloadUrl } from '../config/product';
+import { windowsDownloadUrl, repositoryUrl, releaseUrl, releaseVersion, downloadSize, releaseLicenseUrl } from '../config/product';
 ---
 
 <div class="download" id="download">
+  <div class="download-actions">
   {windowsDownloadUrl ? (
     <a class="download-button" href={windowsDownloadUrl} download>
       <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" width="18" height="18">
@@ -24,13 +25,30 @@ import { windowsDownloadUrl } from '../config/product';
       </svg>
     </button>
   )}
-  <p class="download-status" id="download-status">
-    {windowsDownloadUrl ? 'Free to use.' : 'Free · Not available yet'}
-  </p>
+    <a class="source-link" href={repositoryUrl}>View source on GitHub <span aria-hidden="true">↗</span></a>
+  </div>
+  {windowsDownloadUrl ? (
+    <>
+      <p class="download-terms">Free for personal and professional use <span aria-hidden="true">·</span> <a href={releaseLicenseUrl}>Terms</a></p>
+      <p class="download-meta">Windows x64 <span>·</span> <a href={releaseUrl}>v{releaseVersion}</a> <span>·</span> {downloadSize}</p>
+    </>
+  ) : <p class="download-meta" id="download-status">Windows download not available yet</p>}
 </div>
 
 <style>
   .download { scroll-margin-top: 3rem; }
+  .download-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 1rem 1.5rem; }
+  .source-link { font-size: 0.875rem; text-decoration: none; color: var(--secondary); padding-block: 0.5rem; }
+  .source-link:hover { color: var(--foreground); text-decoration: underline; text-underline-offset: 4px; }
+  .source-link span { margin-left: 0.25rem; }
+  .download-terms { margin: 1rem 0 0; color: var(--secondary); font-size: 0.8125rem; line-height: 1.6; }
+  .download-terms span { padding-inline: 0.35rem; color: var(--muted); }
+  .download-terms a { text-underline-offset: 3px; text-decoration-color: var(--surface-border); }
+  .download-terms a:hover { color: var(--foreground); text-decoration-color: currentColor; }
+  .download-meta { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.6; }
+  .download-actions + .download-meta { margin-top: 1rem; }
+  .download-meta span { padding-inline: 0.35rem; }
+  .download-meta a { text-underline-offset: 3px; }
   .download-button {
     display: inline-flex;
     align-items: center;
@@ -52,7 +70,6 @@ import { windowsDownloadUrl } from '../config/product';
   .download-button:disabled { cursor: not-allowed; }
   a.download-button:hover { background: var(--button-background-hover); border-color: var(--button-background-hover); }
   .download-arrow { margin-left: 0.7rem; opacity: 0.65; }
-  .download-status { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.8125rem; }
   @media (prefers-reduced-motion: reduce) {
     .download-button { transition: none; }
   }
