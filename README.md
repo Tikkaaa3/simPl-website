@@ -92,10 +92,14 @@ Pushing to `main` builds the site and publishes `dist/` to **Cloudflare Workers
 Static Assets** through `.github/workflows/deploy.yml`, using
 `cloudflare/wrangler-action` and `wrangler.jsonc` (`assets.directory = ./dist`).
 Repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
-Repository variable: `SITE_URL`, the public origin used for canonical, Open
-Graph, and sitemap URLs. The first deploy lands on `*.workers.dev`; attach the
-custom domain (`reader.app` or whichever is chosen) in the Cloudflare dashboard
-or with a `routes` entry in `wrangler.jsonc`.
+Repository variable: `SITE_URL` (`https://simplreader.app`), the public origin
+used for canonical, Open Graph, and sitemap URLs.
+
+The site is served at **https://simplreader.app**, attached to the `reader`
+Worker as a custom domain in the Cloudflare dashboard. `www.simplreader.app` is
+also attached and redirected to the root by a 301 Redirect Rule, and
+Always Use HTTPS is on. The production `*.workers.dev` URL is disabled so the
+site has a single public address.
 
 Alternatively, Cloudflare's own Git integration (Workers Builds) can run
 `npm run build` and publish `dist/` without GitHub Actions.
