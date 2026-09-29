@@ -21,7 +21,7 @@ npm run preview
 
 ## Enable downloads
 
-The Windows download currently points to the v0.1.2 official installer.
+The Windows download currently points to the v0.1.3 official installer.
 Keep `windowsDownloadUrl`, `releaseVersion`, and `downloadSize` in
 `src/config/product.ts` aligned when updating the release. Set the URL to `null`
 to show the unavailable state. The displayed size is the installer download,
