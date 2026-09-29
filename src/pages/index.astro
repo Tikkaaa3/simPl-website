@@ -8,7 +8,7 @@ import ReaderDetails from '../components/ReaderDetails.astro';
 import { repositoryUrl, releaseUrl, releaseLicenseUrl, sourceLicenseUrl } from '../config/product';
 
 const title = 'simPl — A lightweight, offline reader for Windows';
-const description = 'Read PDF, EPUB and HTML in a quiet, native Windows reader. Local, source-available, and free for personal and professional use.';
+const description = 'Read PDF, EPUB, HTML, text and Markdown in a quiet, native Windows reader. Local, source-available, and free for personal and professional use.';
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 ---
 
@@ -35,7 +35,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
       <section class="hero" aria-labelledby="hero-title">
         <h1 id="hero-title">simPl</h1>
         <p class="hero-description">A lightweight reader.<br />A quiet place for your books.</p>
-        <p class="hero-intro">Read PDF, EPUB and HTML on Windows,<br class="desktop-break" /> and pick up where you left off.</p>
+        <p class="hero-intro">Read PDF, EPUB, HTML and Markdown on Windows,<br class="desktop-break" /> and pick up where you left off.</p>
         <DownloadButton />
       </section>
       <AppPreview />

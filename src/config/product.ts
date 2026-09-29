@@ -4,12 +4,12 @@
  * `/simPl-setup.exe` for a file placed in `public/`.
  */
 export const windowsDownloadUrl: string | null =
-  'https://github.com/Tikkaaa3/simPl-reader/releases/download/v0.1.3/simPl-0.1.3-windows-x64-setup.exe';
+  'https://github.com/Tikkaaa3/simPl-reader/releases/download/v0.1.4/simPl-0.1.4-windows-x64-setup.exe';
 
 export const repositoryUrl = 'https://github.com/Tikkaaa3/simPl-reader';
-export const releaseVersion = '0.1.3';
+export const releaseVersion = '0.1.4';
 export const releaseUrl = `${repositoryUrl}/releases/tag/v${releaseVersion}`;
-export const downloadSize = '8.4 MB';
+export const downloadSize = '9.6 MB';
 export const sourceLicenseUrl = `${repositoryUrl}/blob/main/LICENSE.md`;
 export const releaseLicenseUrl = `${repositoryUrl}/blob/main/LICENSE-BINARY.txt`;
 

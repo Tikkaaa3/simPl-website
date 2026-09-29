@@ -21,7 +21,7 @@ npm run preview
 
 ## Enable downloads
 
-The Windows download currently points to the v0.1.3 official installer.
+The Windows download currently points to the v0.1.4 official installer.
 Keep `windowsDownloadUrl`, `releaseVersion`, and `downloadSize` in
 `src/config/product.ts` aligned when updating the release. Set the URL to `null`
 to show the unavailable state. The displayed size is the installer download,
@@ -113,8 +113,9 @@ live in the reader repository.
 
 Neutral monochrome colors, self-hosted Geist, and a centered composition:
 the simPl wordmark, a short product introduction, Windows download and source
-links, a real screenshot gallery, three feature notes, a compact FAQ, and
-project/license links.
+links, a real screenshot gallery, six feature notes, a compact FAQ, and
+project/license links. The feature notes and FAQ cover the reader's formats,
+reading themes, in-document find, and highlights, notes and bookmarks.
 Gallery selection, theme switching, and disclosures work without JavaScript.
 Edit the tokens in `src/styles/global.css` to change the visual direction.
 
