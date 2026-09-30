@@ -21,9 +21,11 @@ npm run preview
 
 ## Enable downloads
 
-The Windows download currently points to the v0.1.4 official installer.
-Keep `windowsDownloadUrl`, `releaseVersion`, and `downloadSize` in
-`src/config/product.ts` aligned when updating the release. Set the URL to `null`
+The Windows download currently points to the v0.1.5 official installer, and the
+download area also links the portable ZIP. Keep `windowsDownloadUrl`,
+`releaseVersion`, `downloadSize`, `portableDownloadUrl`, and `portableSize` in
+`src/config/product.ts` aligned when updating the release. Set
+`portableDownloadUrl` to `null` to hide the portable link. Set the URL to `null`
 to show the unavailable state. The displayed size is the installer download,
 not the installed application's size.
 
@@ -46,24 +48,23 @@ sets of terms.
 
 ## Application screenshots
 
+Screenshots live in `src/assets/screens/` and come from the reader's promotional
+media kit (2560 × 1600, 16:10, lossless WebP). Astro generates responsive WebP
+variants at build time.
+
 The frame below the download area is a no-JavaScript gallery with always-visible
-radio labels (see `src/components/AppPreview.astro`). It opens on the reading
-view and offers library and light-appearance previews, each with a caption.
-Native radio controls support keyboard arrow navigation. Only the selected
-figure is displayed, including in the accessibility tree.
+radio labels (see `src/components/AppPreview.astro`): Reading, Library, Themes
+(a 2 × 2 grid of the four reading themes), Notes, PDF (Document view) and
+PDF as book (Book view). Shots that have both a `dark` and a `light` capture
+follow the page's light/dark toggle. A different slide count also needs the
+`:has(#app-preview-*:checked)` visibility rules updated. Only the selected figure
+is displayed, including in the accessibility tree.
 
-Replace the images in `src/assets/` and rebuild:
-
-- `app-preview-reading.png` — reading view (first preview)
-- `app-preview-dark.png` — library, dark appearance
-- `app-preview-light.png` — library, light appearance
-
-Use real app captures at 1918 × 1078 (16:9); Astro generates responsive WebP
-variants locally. To change the order or add a preview, edit the `slides` array in
-`AppPreview.astro`; a different count also needs the `:has(#app-preview-*:checked)`
-visibility rules updated. The first image loads eagerly; the others load lazily.
-PDF modes are explained in the FAQ until real Document and Book view captures
-are available; do not repurpose an EPUB screenshot as a PDF comparison.
+The **New in 0.1.5** section (`src/components/WhatsNew.astro`) uses 16:10
+close-ups cropped from the kit: `crop-listen`, `crop-translate`, `crop-backup`
+and `crop-typography`. The translation shot contains WikDict data, so keep its
+visible CC BY-SA 4.0 attribution and the caption credit when replacing or reusing
+it. Demo books in the screenshots were made for the kit and are not bundled.
 
 ## Hosting
 
@@ -112,10 +113,13 @@ live in the reader repository.
 ## Design
 
 Neutral monochrome colors, self-hosted Geist, and a centered composition:
-the simPl wordmark, a short product introduction, Windows download and source
-links, a real screenshot gallery, six feature notes, a compact FAQ, and
-project/license links. The feature notes and FAQ cover the reader's formats,
-reading themes, in-document find, and highlights, notes and bookmarks.
+a release badge, the simPl wordmark, a short product introduction, Windows
+download and source links, a real screenshot gallery, a "New in" section with
+alternating close-ups, six feature notes, a compact FAQ, and project/license
+links. The FAQ covers formats, PDF views, Listen, word translation and
+dictionary credits, notes and export, typography, backups, and installation.
+"New in" rows fade in with a CSS scroll-driven animation where supported
+(disabled for reduced motion).
 Gallery selection, theme switching, and disclosures work without JavaScript.
 Edit the tokens in `src/styles/global.css` to change the visual direction.
 

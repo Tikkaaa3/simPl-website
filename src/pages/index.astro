@@ -5,10 +5,11 @@ import AppPreview from '../components/AppPreview.astro';
 import Features from '../components/Features.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import ReaderDetails from '../components/ReaderDetails.astro';
-import { repositoryUrl, releaseUrl, releaseLicenseUrl, sourceLicenseUrl } from '../config/product';
+import WhatsNew from '../components/WhatsNew.astro';
+import { repositoryUrl, releaseUrl, releaseVersion, releaseLicenseUrl, sourceLicenseUrl } from '../config/product';
 
 const title = 'simPl — A lightweight, offline reader for Windows';
-const description = 'Read PDF, EPUB, HTML, text and Markdown in a quiet, native Windows reader. Local, source-available, and free for personal and professional use.';
+const description = 'Read PDF, EPUB, HTML, text and Markdown in a quiet, native Windows reader. Listen with Windows voices, look up words offline, and keep your notes on your own computer. Free for personal and professional use.';
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 ---
 
@@ -33,12 +34,14 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     <ThemeToggle />
     <main class="page-shell" id="main">
       <section class="hero" aria-labelledby="hero-title">
+        <a class="hero-badge" href="#new"><span class="hero-badge-version">{releaseVersion}</span> <span class="hero-badge-long">Listen, offline word lookup and backups</span><span class="hero-badge-short">See what’s new</span> <span aria-hidden="true">→</span></a>
         <h1 id="hero-title">simPl</h1>
         <p class="hero-description">A lightweight reader.<br />A quiet place for your books.</p>
-        <p class="hero-intro">Read PDF, EPUB, HTML and Markdown on Windows,<br class="desktop-break" /> and pick up where you left off.</p>
+        <p class="hero-intro">Read PDF, EPUB, HTML and Markdown on Windows. Listen along,<br class="desktop-break" /> look up a word, and pick up where you left off.</p>
         <DownloadButton />
       </section>
       <AppPreview />
+      <WhatsNew />
       <Features />
       <ReaderDetails />
       <footer class="page-footer">
@@ -49,6 +52,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
           <a href={releaseLicenseUrl}>Terms of use</a>
           <a href={sourceLicenseUrl}>Source license</a>
         </nav>
+        <p class="page-copyright">© 2026 Tikkaaa3</p>
       </footer>
     </main>
   </body>

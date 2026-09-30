@@ -1,32 +1,40 @@
 ---
-import { releaseLicenseUrl, sourceLicenseUrl, releaseUrl } from '../config/product';
+import { releaseLicenseUrl, sourceLicenseUrl, releaseUrl, portableDownloadUrl } from '../config/product';
 ---
 
-<section class="faq content-section" aria-labelledby="faq-title">
+<section class="faq content-section" id="faq" aria-labelledby="faq-title">
   <h2 id="faq-title">A few useful details.</h2>
   <details>
     <summary>Which files can I read?</summary>
-    <div class="details-body"><p>PDF, DRM-free reflowable EPUB 2/3, local HTML/XHTML, and plain text or Markdown files (.txt, .text, .md, .markdown). Add a document or drop it into the window. DRM-protected and fixed-layout EPUB books are not supported. Books shown in the previews are not included.</p></div>
+    <div class="details-body"><p>PDF, DRM-free reflowable EPUB 2/3, local HTML/XHTML, and plain text or Markdown files (.txt, .text, .md, .markdown). Add a document or drop it into the window. DRM-protected and fixed-layout EPUB books are not supported. Books shown in the previews were made for these screenshots and are not included.</p></div>
   </details>
   <details>
     <summary>How are PDFs shown?</summary>
-    <div class="details-body"><p>Two ways, and you can switch without losing your page. Document view keeps the original layout, images and typography, a natural fit for papers, tables and illustrated documents. Book view brings the text and extracted illustrations into simPl’s quieter reading style.</p><p>Book view needs a PDF text layer. For scans and complex layouts, use Document view.</p></div>
+    <div class="details-body"><p>Two ways, and you can switch without losing your page. Document view keeps the original layout, images and typography, a natural fit for papers, tables and illustrated documents. Book view brings the text and extracted illustrations into simPl’s quieter reading style.</p><p>Book view needs a PDF text layer and does not perform OCR. For scans and complex layouts, use Document view.</p></div>
   </details>
   <details>
-    <summary>Can I search inside a book?</summary>
-    <div class="details-body"><p>Yes. Press <strong>Ctrl+F</strong> in PDF, EPUB and HTML to open the find bar, step through the matches and jump to the exact line. In PDF it searches both Document and Book views.</p></div>
+    <summary>How does Listen work?</summary>
+    <div class="details-body"><p>Select <strong>Listen</strong> in the toolbar, or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd>. simPl reads from the current page onward, across pages and EPUB chapters, scrolls with the spoken line and marks the current word. Pause, resume and change the speed as you go; select Listen again to stop. To hear just a passage, select it and choose <strong>Read aloud</strong>.</p><p>Listen uses the voices installed in Windows, so it works offline. Voice and speed are remembered. You can add more voices in Windows Settings › Time &amp; language › Speech.</p></div>
   </details>
   <details>
-    <summary>Can I change how the text looks?</summary>
-    <div class="details-body"><p>Yes. Reading Settings offers four themes, <strong>Default</strong>, <strong>Soft</strong>, <strong>Clear</strong> and <strong>Compact</strong>, and each sets its own reading font, line and paragraph spacing, and light and dark colors. Text size stays your own through zoom, and all fonts are bundled, so nothing is downloaded. Page numbers stay the same when you switch themes.</p></div>
+    <summary>Which languages can I translate words between?</summary>
+    <div class="details-body"><p>English ↔ Turkish, Spanish, German, French, Japanese and Chinese, plus Korean → English: 13 directions in all. Double-click a word, or select it and right-click › <strong>Translate</strong>. Choose the input and output language and whether lookups open automatically in Settings.</p><p>Dictionaries are optional. Download only the directions you need, or import a dictionary ZIP; after that, lookups run entirely on your computer and no document text is sent online. These are dictionary meanings, not sentence translations, and coverage varies by language pair.</p><p>Dictionary data comes from <a href="https://www.wikdict.com/page/about">WikDict</a> (Wiktionary contributors, via DBnary), <a href="https://kaikki.org/">Kaikki / Wiktextract</a> and <a href="https://www.mdbg.net/chinese/dictionary?page=cedict">CC-CEDICT</a>, under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p></div>
   </details>
   <details>
     <summary>Can I highlight text or take notes?</summary>
-    <div class="details-body"><p>Yes. Select text to choose a highlight color or add a note; right-click a saved highlight to change its color, edit the note or remove it. Right-click a page to bookmark it, and open the bookmarks and notes sidebar from the right edge or with <strong>Ctrl+B</strong>. Highlights, notes and bookmarks are stored per book on your computer.</p></div>
+    <div class="details-body"><p>Yes. Select text to choose a highlight color or add a note; right-click a saved highlight to change its color, edit the note or remove it. Right-click a page to bookmark it, and open the bookmarks and notes sidebar from the right edge or with <kbd>Ctrl</kbd>+<kbd>B</kbd>.</p><p>To take them elsewhere, export bookmarks, highlighted quotes and notes as Markdown, text or JSON from Settings › Library &amp; data.</p></div>
+  </details>
+  <details>
+    <summary>Can I change how the text looks?</summary>
+    <div class="details-body"><p>Yes. Reading Settings offers four themes, <strong>Default</strong>, <strong>Soft</strong>, <strong>Clear</strong> and <strong>Compact</strong>, each with its own reading font, spacing, and light and dark colors. Page numbers stay the same when you switch themes.</p><p>You can also set the font, text size, line spacing and side margins for a single book; reflowable books remember their own settings. Toggle fit-width with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> and fullscreen with <kbd>F11</kbd>.</p></div>
+  </details>
+  <details>
+    <summary>How do I back up or move my library?</summary>
+    <div class="details-body"><p>Open Settings › Library &amp; data and choose <strong>Create backup</strong>. The ZIP includes settings, shelves, reading positions and annotations, and optionally imported book files and downloaded dictionaries. <strong>Restore backup</strong> shows a review first and keeps your previous profile in a recovery folder.</p></div>
   </details>
   <details>
     <summary>Do I need an account or an internet connection?</summary>
-    <div class="details-body"><p>No account is needed. Once installed, simPl reads your local books offline and saves your library, preferences and reading position on your computer.</p></div>
+    <div class="details-body"><p>No account is needed. Once installed, simPl reads your local books offline and saves your library, preferences and reading position on your computer. The only time it goes online is when you choose to download a dictionary.</p></div>
   </details>
   <details>
     <summary>Can I use simPl at work?</summary>
@@ -34,6 +42,6 @@ import { releaseLicenseUrl, sourceLicenseUrl, releaseUrl } from '../config/produ
   </details>
   <details>
     <summary>What should I know before installing?</summary>
-    <div class="details-body"><p>The download is for Windows x64 and installs for your Windows account. The current installer is not code-signed, so Windows SmartScreen may show a warning. Release details and a SHA-256 checksum are available in the <a href={releaseUrl}>release notes</a>.</p></div>
+    <div class="details-body"><p>The download is for Windows x64 and installs for your Windows account. Installing over an earlier version keeps your library, preferences, positions, notes and dictionaries. The installer is not code-signed yet, so Windows SmartScreen may show a warning. Release details and SHA-256 checksums are in the <a href={releaseUrl}>release notes</a>.</p>{portableDownloadUrl && <p>Prefer not to install? Download the <a href={portableDownloadUrl} download>portable ZIP</a>, extract the whole folder and run <strong>simPl.exe</strong>. Portable and installed copies share the same library.</p>}</div>
   </details>
 </section>

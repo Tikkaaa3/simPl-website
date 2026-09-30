@@ -1,13 +1,60 @@
 ---
 import { Image } from 'astro:assets';
-import darkShot from '../assets/app-preview-dark.png';
-import readingShot from '../assets/app-preview-reading.png';
-import lightShot from '../assets/app-preview-light.png';
+import type { ImageMetadata } from 'astro';
+import readingDark from '../assets/screens/reading-default-dark.webp';
+import readingLight from '../assets/screens/reading-default-light.webp';
+import libraryDark from '../assets/screens/library-dark.webp';
+import libraryLight from '../assets/screens/library-light.webp';
+import softDark from '../assets/screens/reading-soft-dark.webp';
+import softLight from '../assets/screens/reading-soft-light.webp';
+import clearDark from '../assets/screens/reading-clear-dark.webp';
+import clearLight from '../assets/screens/reading-clear-light.webp';
+import compactDark from '../assets/screens/reading-compact-dark.webp';
+import compactLight from '../assets/screens/reading-compact-light.webp';
+import notesShot from '../assets/screens/notes-highlights.webp';
+import pdfDocument from '../assets/screens/pdf-document.webp';
+import pdfBook from '../assets/screens/pdf-book.webp';
 
-const slides = [
-  { src: readingShot, label: 'Reading', alt: 'A book open in simPl’s dark reading view, with page navigation and zoom controls', caption: 'A quiet page, comfortable type, and your place saved for next time.' },
-  { src: darkShot, label: 'Your library', alt: 'The simPl local library in dark appearance', caption: 'Keep your books together. Find a favourite or pick up where you left off.' },
-  { src: lightShot, label: 'Light appearance', alt: 'The simPl local library in light appearance', caption: 'Light or dark. The same familiar space, in the appearance you prefer.' },
+// A shot with a `light` variant follows the page's light/dark toggle.
+type Shot = { dark: ImageMetadata; light?: ImageMetadata; alt: string; name?: string };
+type Slide = { label: string; caption: string; shots: Shot[] };
+
+const slides: Slide[] = [
+  {
+    label: 'Reading',
+    caption: 'A quiet page, comfortable type, and your place saved for next time.',
+    shots: [{ dark: readingDark, light: readingLight, alt: 'A book open in simPl’s reading view, with Find, Listen and zoom in the toolbar' }],
+  },
+  {
+    label: 'Library',
+    caption: 'Continue Reading, favourites and your own shelves, all in one local library.',
+    shots: [{ dark: libraryDark, light: libraryLight, alt: 'The simPl library with Continue Reading cards, shelves and sorting' }],
+  },
+  {
+    label: 'Themes',
+    caption: 'Default, Soft, Clear and Compact. Each sets its own font, spacing and colors, in light or dark.',
+    shots: [
+      { dark: readingDark, light: readingLight, alt: 'The Default reading theme', name: 'Default' },
+      { dark: softDark, light: softLight, alt: 'The Soft reading theme', name: 'Soft' },
+      { dark: clearDark, light: clearLight, alt: 'The Clear reading theme', name: 'Clear' },
+      { dark: compactDark, light: compactLight, alt: 'The Compact reading theme', name: 'Compact' },
+    ],
+  },
+  {
+    label: 'Notes',
+    caption: 'Highlight a passage, add a note or bookmark a page. Everything waits in the sidebar.',
+    shots: [{ dark: notesShot, alt: 'A highlighted passage with its note in the bookmarks and notes sidebar' }],
+  },
+  {
+    label: 'PDF',
+    caption: 'Document view keeps the original page, typography and artwork.',
+    shots: [{ dark: pdfDocument, alt: 'A PDF page shown in Document view with its original layout' }],
+  },
+  {
+    label: 'PDF as book',
+    caption: 'Book view reflows the same PDF into simPl’s quieter reading style.',
+    shots: [{ dark: pdfBook, alt: 'The same PDF reflowed in Book view' }],
+  },
 ];
 ---
 
@@ -23,10 +70,22 @@ const slides = [
   </fieldset>
   {slides.map((slide, index) => (
     <figure class="preview-panel" id={`preview-panel-${index + 1}`}>
-      <div class="preview-frame">
-        <Image src={slide.src} alt={slide.alt} widths={[480, 832, 1280, 1664]}
-          sizes="(max-width: 880px) calc(100vw - 48px), 832px" format="webp" quality={85}
-          loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+      <div class:list={['preview-frame', { 'preview-grid': slide.shots.length > 1 }]}>
+        {slide.shots.map((shot) => {
+          const sizes = slide.shots.length > 1 ? '(max-width: 880px) calc(50vw - 28px), 416px' : '(max-width: 880px) calc(100vw - 48px), 832px';
+          const widths = slide.shots.length > 1 ? [320, 480, 832] : [480, 832, 1280, 1664];
+          return (
+            <div class="shot">
+              <Image class:list={[{ 'shot-dark': shot.light }]} src={shot.dark} alt={shot.alt} widths={widths} sizes={sizes}
+                format="webp" quality={85} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+              {shot.light && (
+                <Image class="shot-light" src={shot.light} alt={shot.alt} widths={widths} sizes={sizes}
+                  format="webp" quality={85} loading="lazy" decoding="async" />
+              )}
+              {shot.name && <span class="shot-name" aria-hidden="true">{shot.name}</span>}
+            </div>
+          );
+        })}
       </div>
       <figcaption>{slide.caption}</figcaption>
     </figure>
@@ -34,19 +93,75 @@ const slides = [
 </section>
 
 <style>
-  .app-preview { width: 100%; max-width: 52rem; }
-  .preview-picker { display: flex; justify-content: center; gap: 0.25rem; border: 0; padding: 0; margin: 0 0 1rem; min-width: 0; }
-  .preview-choice { position: relative; cursor: pointer; }
-  .preview-choice span { display: block; padding: 0.75rem 1rem; border-bottom: 1px solid transparent; color: var(--muted); font-size: 0.8125rem; }
+  .app-preview { position: relative; width: 100%; max-width: 52rem; }
+  .preview-picker {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 1.25rem;
+    padding: 0.25rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 999px;
+    background: var(--surface);
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .preview-choice { position: relative; flex-shrink: 0; cursor: pointer; }
+  .preview-choice span {
+    display: block;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+    transition: color 140ms ease, background 140ms ease;
+  }
   .preview-choice:hover span { color: var(--foreground); }
-  .preview-choice:has(input:checked) span { border-color: var(--foreground); color: var(--foreground); }
-  .preview-choice:has(input:focus-visible) { outline: 2px solid var(--foreground); outline-offset: 3px; border-radius: 3px; }
+  .preview-choice:has(input:checked) span { background: var(--foreground); color: var(--background); }
+  .preview-choice:has(input:focus-visible) { outline: 2px solid var(--foreground); outline-offset: 2px; border-radius: 999px; }
   .preview-panel { display: none; margin: 0; }
   .app-preview:has(#app-preview-1:checked) #preview-panel-1,
   .app-preview:has(#app-preview-2:checked) #preview-panel-2,
-  .app-preview:has(#app-preview-3:checked) #preview-panel-3 { display: block; }
-  .preview-frame { border: 1px solid var(--surface-border); border-radius: 0.75rem; overflow: hidden; background: var(--surface); }
-  .preview-frame img { display: block; width: 100%; height: auto; }
+  .app-preview:has(#app-preview-3:checked) #preview-panel-3,
+  .app-preview:has(#app-preview-4:checked) #preview-panel-4,
+  .app-preview:has(#app-preview-5:checked) #preview-panel-5,
+  .app-preview:has(#app-preview-6:checked) #preview-panel-6 { display: block; animation: preview-in 260ms ease; }
+  .preview-frame {
+    border: 1px solid var(--surface-border);
+    border-radius: 0.875rem;
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: var(--frame-shadow);
+  }
+  .preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--surface-border); }
+  .shot { position: relative; }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot-light { display: none !important; }
+  :global(html:has(#theme-toggle:checked)) .shot-dark { display: none !important; }
+  :global(html:has(#theme-toggle:checked)) .shot-light { display: block !important; }
+  .shot-name {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 999px;
+    background: var(--control-background);
+    color: var(--foreground);
+    font-size: 0.75rem;
+  }
   figcaption { min-height: 3rem; margin-top: 1rem; color: var(--secondary); font-size: 0.8125rem; line-height: 1.6; text-align: center; text-wrap: balance; }
-  @media (max-width: 42rem) { .preview-choice span { padding-inline: 0.6rem; font-size: 0.75rem; } }
+  @keyframes preview-in { from { opacity: 0; } to { opacity: 1; } }
+  @media (max-width: 42rem) {
+    .preview-picker { justify-content: flex-start; }
+    .preview-choice span { padding-inline: 0.7rem; font-size: 0.75rem; }
+    .shot-name { left: 0.4rem; bottom: 0.4rem; font-size: 0.6875rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .preview-panel { animation: none !important; }
+    .preview-choice span { transition: none; }
+  }
 </style>

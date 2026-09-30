@@ -21,6 +21,8 @@
   --button-background-hover: #ffffff;
   --control-background: #161616;
   --control-border: #2a2a2a;
+  --frame-shadow: 0 1.5rem 4rem -1.5rem rgb(0 0 0 / 0.7);
+  --glow: rgb(255 255 255 / 0.06);
   font-family: 'Geist Variable', 'Segoe UI', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -44,10 +46,14 @@ html:has(#theme-toggle:checked) {
   --button-background-hover: #000000;
   --control-background: #ffffff;
   --control-border: #e2e2e2;
+  --frame-shadow: 0 1.5rem 3.5rem -1.75rem rgb(0 0 0 / 0.22);
+  --glow: rgb(0 0 0 / 0.04);
 }
 
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body { margin: 0; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 ::selection { color: var(--background); background: var(--foreground); }
 a { color: inherit; }
 button { font: inherit; }
@@ -65,7 +71,40 @@ svg { flex-shrink: 0; }
   padding: clamp(2.5rem, 5vh, 4rem) 1.5rem 3rem;
 }
 
-.hero { width: 100%; text-align: center; }
+.hero { position: relative; width: 100%; text-align: center; }
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -6rem 0 auto;
+  z-index: -1;
+  height: 32rem;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1.75rem;
+  padding: 0.3rem 0.8rem 0.3rem 0.3rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--secondary);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+.hero-badge-short { display: none; }
+.hero-badge:hover { border-color: var(--muted); color: var(--foreground); }
+.hero-badge-version {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 0.75rem;
+  font-weight: 560;
+}
 .hero h1 {
   margin: 0 0 1.25rem;
   padding-right: 0.05em;
@@ -88,7 +127,16 @@ svg { flex-shrink: 0; }
   width: 100%;
   max-width: 52rem;
   border-top: 1px solid var(--surface-border);
-  padding-top: clamp(1.5rem, 4vh, 2.5rem);
+  padding-top: clamp(2rem, 5vw, 3rem);
+}
+.features-title {
+  max-width: 26rem;
+  margin: 0 0 clamp(1.5rem, 4vw, 2.25rem);
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 .features ul {
   display: grid;
@@ -98,7 +146,7 @@ svg { flex-shrink: 0; }
   padding: 0;
   list-style: none;
 }
-.features h2 {
+.features h3 {
   margin: 0 0 0.5rem;
   font-size: 0.9375rem;
   font-weight: 560;
@@ -121,6 +169,7 @@ svg { flex-shrink: 0; }
   text-align: center;
 }
 .page-footer p { margin: 0 0 1rem; }
+.page-footer .page-copyright { margin: 1.25rem 0 0; font-size: 0.75rem; }
 .page-footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 1.5rem; }
 .page-footer a { padding-block: 0.5rem; }
 .features a, .content-section a, .page-footer a { text-underline-offset: 4px; text-decoration-color: var(--surface-border); }
@@ -134,6 +183,22 @@ details summary:hover { color: var(--secondary); }
 .details-body p:last-child { margin-bottom: 0; }
 .faq h2 { margin-bottom: 1rem; }
 .faq details { border-bottom: 1px solid var(--surface-border); }
+details summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+details summary::-webkit-details-marker { display: none; }
+details summary::after { content: '+'; color: var(--muted); font-size: 1.125rem; font-weight: 300; line-height: 1; transition: transform 160ms ease; }
+details[open] summary::after { transform: rotate(45deg); }
+kbd {
+  display: inline-block;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--surface-border);
+  border-bottom-width: 2px;
+  border-radius: 0.3rem;
+  background: var(--surface);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.8125em;
+  line-height: 1.5;
+}
 
 /* Theme toggle: a quiet control, top-right, like the reader's toolbar button. */
 .theme-toggle {
@@ -174,13 +239,15 @@ html:has(#theme-toggle:checked) .theme-toggle .icon-moon { display: none; }
 html:has(#theme-toggle:checked) .theme-toggle .icon-sun { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
-  .theme-toggle { transition: none; }
+  .theme-toggle, .hero-badge, details summary::after { transition: none; }
 }
 
 @media (max-width: 42rem) {
   .page-shell { padding-bottom: 2rem; }
   .hero h1 { font-size: clamp(5.5rem, 25vw, 8rem); }
   .hero-description { font-size: 1.5rem; }
+  .hero-badge-long { display: none; }
+  .hero-badge-short { display: inline; }
   .desktop-break { display: none; }
   .features ul { grid-template-columns: 1fr; gap: 1.25rem; }
 }

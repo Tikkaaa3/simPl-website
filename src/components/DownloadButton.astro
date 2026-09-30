@@ -1,5 +1,5 @@
 ---
-import { windowsDownloadUrl, repositoryUrl, releaseUrl, releaseVersion, downloadSize, releaseLicenseUrl } from '../config/product';
+import { windowsDownloadUrl, portableDownloadUrl, portableSize, repositoryUrl, releaseUrl, releaseVersion, downloadSize, releaseLicenseUrl } from '../config/product';
 ---
 
 <div class="download" id="download">
@@ -30,7 +30,7 @@ import { windowsDownloadUrl, repositoryUrl, releaseUrl, releaseVersion, download
   {windowsDownloadUrl ? (
     <>
       <p class="download-terms">Free for personal and professional use <span aria-hidden="true">·</span> <a href={releaseLicenseUrl}>Terms</a></p>
-      <p class="download-meta">Windows x64 <span>·</span> <a href={releaseUrl}>v{releaseVersion}</a> <span>·</span> {downloadSize}</p>
+      <p class="download-meta">Windows x64 <span>·</span> <a href={releaseUrl}>v{releaseVersion}</a> <span>·</span> {downloadSize}{portableDownloadUrl && <>{' '}<span>·</span> <span class="nowrap"><a href={portableDownloadUrl} download>Portable ZIP</a> ({portableSize})</span></>}</p>
     </>
   ) : <p class="download-meta" id="download-status">Windows download not available yet</p>}
 </div>
@@ -47,8 +47,10 @@ import { windowsDownloadUrl, repositoryUrl, releaseUrl, releaseVersion, download
   .download-terms a:hover { color: var(--foreground); text-decoration-color: currentColor; }
   .download-meta { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.6; }
   .download-actions + .download-meta { margin-top: 1rem; }
-  .download-meta span { padding-inline: 0.35rem; }
-  .download-meta a { text-underline-offset: 3px; }
+  .download-meta span:not(.nowrap) { padding-inline: 0.35rem; }
+  .nowrap { white-space: nowrap; }
+  .download-meta a { text-underline-offset: 3px; text-decoration-color: var(--surface-border); }
+  .download-meta a:hover { color: var(--foreground); text-decoration-color: currentColor; }
   .download-button {
     display: inline-flex;
     align-items: center;
