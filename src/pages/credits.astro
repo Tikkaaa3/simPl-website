@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import PageFooter from '../components/PageFooter.astro';
+import { repositoryUrl, releaseLicenseUrl, sourceLicenseUrl } from '../config/product';
+
+const title = 'Credits — simPl';
+const description = 'Dictionary sources, screenshot attribution, adaptations and CC BY-SA 4.0 license information for simPl.';
+const canonical = Astro.site ? new URL('/credits/', Astro.site) : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c0c0c" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="simPl" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <ThemeToggle />
+    <main class="page-shell credits" id="main">
+      <header class="credits-header">
+        <a href="/">← simPl home</a>
+        <h1>Credits</h1>
+        <p>The sources behind simPl’s optional dictionaries and the dictionary content shown on this website.</p>
+      </header>
+
+      <section class="content-section" id="dictionary-screenshot" aria-labelledby="screenshot-title">
+        <h2 id="screenshot-title">Word translation screenshot</h2>
+        <p>The <a href="/#word-translation">Word translation image</a> shows the English → Turkish result for <strong>book</strong>: <a href="https://www.wikdict.com/page/about">WikDict</a> by Karl Bartel, from <a href="https://www.wiktionary.org/">Wiktionary contributors</a>, extracted via <a href="https://kaiko.getalp.org/about-dbnary/">DBnary</a>.</p>
+        <ul>
+          <li>Source snapshot: WikDict SQLite <code>2_2026-06</code>.</li>
+          <li><a href="https://download.wikdict.com/dictionaries/sqlite/2_2026-06/en-tr.sqlite3">Original English → Turkish source database</a>.</li>
+          <li><a href="https://en.wiktionary.org/wiki/book">English Wiktionary entry for book</a>, with contributors available through its page history.</li>
+          <li><a href={`${repositoryUrl}/blob/main/assets/dictionaries/manifest.json`}>simPl source manifest</a>, including source and index checksums.</li>
+        </ul>
+        <p>WikDict processes and merges Wiktionary data extracted by DBnary. simPl normalizes headwords and whitespace, combines records, removes duplicate meanings, limits index entries and displays an excerpt of the result.</p>
+        <p>This website crops the screenshot and resizes it for different screen sizes. The provider credit inside the image is preserved. The dictionary data and simPl’s adaptations remain <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>.</p>
+        <p><a href={`${repositoryUrl}/blob/main/docs/screenshots/ATTRIBUTION.md`}>Original promotional image attribution</a>.</p>
+      </section>
+
+      <section class="content-section" id="dictionary-sources" aria-labelledby="sources-title">
+        <h2 id="sources-title">All optional dictionary sources</h2>
+        <ul>
+          <li><strong>English ↔ Turkish, Spanish, German, French, Japanese and Chinese:</strong> <a href="https://www.wikdict.com/page/about">WikDict</a> by Karl Bartel; <a href="https://www.wiktionary.org/">Wiktionary contributors</a>, extracted via <a href="https://kaiko.getalp.org/about-dbnary/">DBnary</a>. These twelve directions use WikDict SQLite snapshot <code>2_2026-06</code>.</li>
+          <li><strong>Korean → English:</strong> <a href="https://kaikki.org/dictionary/Korean/index.html">Kaikki / Wiktextract</a>, by Tatu Ylonen and contributors; <a href="https://en.wiktionary.org/wiki/Wiktionary:Copyrights">English Wiktionary contributors</a>. The Korean subset was downloaded on September 30, 2026.</li>
+          <li><strong>Chinese → English supplementary data:</strong> <a href="https://www.mdbg.net/chinese/dictionary?page=cedict">CC-CEDICT contributors / MDBG</a>, continuing Paul Denisowski’s CEDICT project. The snapshot was downloaded on September 30, 2026 and adds explicit simplified and traditional headwords. <a href="https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz">Original CC-CEDICT source download</a>.</li>
+        </ul>
+        <p class="retained-notice">CEDICT - Copyright (C) 1997, 1998 Paul Andrew Denisowski</p>
+        <p>See the <a href={`${repositoryUrl}/blob/main/assets/dictionaries/README.md`}>full dictionary notices and adaptation details</a> and <a href={`${repositoryUrl}/blob/main/assets/dictionaries/manifest.json`}>source manifest</a> for original sources, checksums and entry counts.</p>
+      </section>
+
+      <section class="content-section" id="dictionary-license" aria-labelledby="license-title">
+        <h2 id="license-title">Dictionary license and scope</h2>
+        <p>Dictionary data and simPl’s adaptations of that data are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)</a>. You may copy, adapt and redistribute the data, including commercially, subject to the license’s attribution, change indication and ShareAlike conditions.</p>
+        <p>The application’s <a href={sourceLicenseUrl}>source license</a> and <a href={releaseLicenseUrl}>official binary terms</a> do not restrict these dictionary data rights. Any website or application restrictions on reuse, redistribution or commercial use apply only to independently licensed material and do not limit rights granted for CC-licensed dictionary content, including content reproduced in screenshots.</p>
+        <p>This notice does not relicense the website or application as a whole, independent application code, interface elements, or rights in the simPl name or logo under CC BY-SA.</p>
+        <p>No endorsement or approval of simPl by the source projects or their contributors is implied.</p>
+        <p>The data is provided as-is, without warranties. See the <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode.en">complete CC BY-SA 4.0 legal text, including the warranty disclaimer and limitation of liability</a>.</p>
+      </section>
+      <PageFooter />
+    </main>
+  </body>
+</html>
+
+<style>
+  .credits { max-width: 52rem; align-items: stretch; padding-top: 4.5rem; }
+  .credits-header > a { color: var(--secondary); font-size: 0.875rem; text-underline-offset: 4px; }
+  .credits-header h1 { margin: 1.5rem 0 0.75rem; font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 520; line-height: 1.1; letter-spacing: -0.045em; }
+  .credits p, .credits li { color: var(--secondary); font-size: 0.9375rem; line-height: 1.75; }
+  .credits p { margin: 0 0 1rem; }
+  .credits p:last-child { margin-bottom: 0; }
+  .credits ul { margin: 1rem 0; padding-left: 1.25rem; }
+  .credits li + li { margin-top: 0.65rem; }
+  .credits section { scroll-margin-top: 2rem; }
+  .credits .content-section a { text-decoration-color: currentColor; }
+  .credits code { font-size: 0.9em; }
+  .retained-notice { padding: 1rem; border-left: 2px solid var(--surface-border); background: var(--surface); }
+</style>

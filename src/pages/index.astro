@@ -6,7 +6,8 @@ import Features from '../components/Features.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import ReaderDetails from '../components/ReaderDetails.astro';
 import WhatsNew from '../components/WhatsNew.astro';
-import { repositoryUrl, releaseUrl, releaseVersion, releaseLicenseUrl, sourceLicenseUrl } from '../config/product';
+import PageFooter from '../components/PageFooter.astro';
+import { releaseVersion } from '../config/product';
 
 const title = 'simPl — A lightweight, offline reader for Windows';
 const description = 'Read PDF, EPUB, HTML, text and Markdown in a quiet, native Windows reader. Listen with Windows voices, look up words offline, and keep your notes on your own computer. Free for personal and professional use.';
@@ -44,16 +45,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
       <WhatsNew />
       <Features />
       <ReaderDetails />
-      <footer class="page-footer">
-        <p>Just you and your next chapter.</p>
-        <nav aria-label="Project links">
-          <a href={repositoryUrl}>GitHub</a>
-          <a href={releaseUrl}>Release notes</a>
-          <a href={releaseLicenseUrl}>Terms of use</a>
-          <a href={sourceLicenseUrl}>Source license</a>
-        </nav>
-        <p class="page-copyright">© 2026 Tikkaaa3</p>
-      </footer>
+      <PageFooter />
     </main>
   </body>
 </html>

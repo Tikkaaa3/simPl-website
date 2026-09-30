@@ -46,6 +46,11 @@ Noncommercial 1.0.0 (`LICENSE.md`); describe it as **source-available**.
 The download area links to the release terms; the FAQ and footer link to both
 sets of terms.
 
+Dictionary data and simPl's adaptations retain their independent CC BY-SA 4.0
+rights, including commercial reuse under that license. `/credits/` documents
+the screenshot's sources, changes, all optional dictionary providers and the
+license boundary; the shared footer and visible translation caption link to it.
+
 ## Application screenshots
 
 Screenshots live in `src/assets/screens/` and come from the reader's promotional
@@ -74,7 +79,7 @@ needed on the production server.
 
 `robots.txt` and `sitemap.xml` are generated at build time by
 `src/pages/robots.txt.ts` and `src/pages/sitemap.xml.ts`. `robots.txt` allows
-crawling and points at the sitemap; the sitemap lists the homepage. Both need a
+crawling and points at the sitemap; the sitemap lists the homepage and credits. Both need a
 public origin, so set `SITE_URL` to see the absolute `Sitemap:` and `<loc>` URLs.
 
 Set `SITE_URL` to the final origin (for example, in the build environment) to enable

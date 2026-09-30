@@ -51,7 +51,7 @@ const items = [
   </header>
   <ol class="new-list">
     {items.map((item) => (
-      <li class="new-item">
+      <li class="new-item" id={item.credit ? 'word-translation' : undefined}>
         <div class="new-copy">
           <p class="new-kicker">{item.kicker}</p>
           <h3>{item.title}</h3>
@@ -64,7 +64,7 @@ const items = [
           <Image src={item.src} alt={item.alt} widths={[400, 640, 960]}
             sizes="(max-width: 48rem) calc(100vw - 48px), 460px" format="webp" quality={85} loading="lazy" decoding="async" />
           {item.credit && (
-            <figcaption>Dictionary data: <a href="https://www.wikdict.com/page/about">WikDict</a>, from Wiktionary contributors, adapted by simPl, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Cropped screenshot.</figcaption>
+            <figcaption>Dictionary data: <a href="https://www.wikdict.com/page/about">WikDict</a> (Karl Bartel), <a href="https://www.wiktionary.org/">Wiktionary contributors</a> via <a href="https://kaiko.getalp.org/about-dbnary/">DBnary</a> — <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a>. Normalized and excerpted by simPl. Cropped screenshot. <a href="/credits/#dictionary-screenshot">Sources and license</a>.</figcaption>
           )}
         </figure>
       </li>
@@ -106,8 +106,8 @@ const items = [
     border-radius: 0.75rem;
     box-shadow: var(--frame-shadow);
   }
-  .new-shot figcaption { margin-top: 0.6rem; color: var(--muted); font-size: 0.6875rem; line-height: 1.5; }
-  .new-shot figcaption a { text-underline-offset: 3px; text-decoration-color: var(--surface-border); }
+  .new-shot figcaption { margin-top: 0.75rem; color: var(--secondary); font-size: 0.8125rem; line-height: 1.65; }
+  .new-shot figcaption a { text-underline-offset: 3px; }
   .new-shot figcaption a:hover { color: var(--foreground); }
 
   /* Progressive enhancement: rows ease in as they scroll into view. */
