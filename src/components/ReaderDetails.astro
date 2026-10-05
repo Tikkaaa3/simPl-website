@@ -1,5 +1,5 @@
 ---
-import { releaseLicenseUrl, sourceLicenseUrl, releaseUrl, portableDownloadUrl } from '../config/product';
+import { releaseLicenseUrl, sourceLicenseUrl, releaseUrl, portableDownloadUrl, androidDownloadUrl, androidReleaseUrl, androidUniversalUrl } from '../config/product';
 ---
 
 <section class="faq content-section" id="faq" aria-labelledby="faq-title">
@@ -42,6 +42,6 @@ import { releaseLicenseUrl, sourceLicenseUrl, releaseUrl, portableDownloadUrl } 
   </details>
   <details>
     <summary>What should I know before installing?</summary>
-    <div class="details-body"><p>The download is for Windows x64 and installs for your Windows account. Installing over an earlier version keeps your library, preferences, positions, notes and dictionaries. The installer is not code-signed yet, so Windows SmartScreen may show a warning. Release details and SHA-256 checksums are in the <a href={releaseUrl}>release notes</a>.</p>{portableDownloadUrl && <p>Prefer not to install? Download the <a href={portableDownloadUrl} download>portable ZIP</a>, extract the whole folder and run <strong>simPl.exe</strong>. Portable and installed copies share the same library.</p>}</div>
+    <div class="details-body"><p>The download is for Windows x64 and installs for your Windows account. Installing over an earlier version keeps your library, preferences, positions, notes and dictionaries. The installer is not code-signed yet, so Windows SmartScreen may show a warning. Release details and SHA-256 checksums are in the <a href={releaseUrl}>release notes</a>.</p>{portableDownloadUrl && <p>Prefer not to install? Download the <a href={portableDownloadUrl} download>portable ZIP</a>, extract the whole folder and run <strong>simPl.exe</strong>. Portable and installed copies share the same library.</p>}{androidDownloadUrl && <p>On Android, download the APK and allow installs from your browser when asked. simPl needs Android 8.0 or later. Most phones should use the ARM64 APK{androidUniversalUrl && <>; the <a href={androidUniversalUrl} download>universal APK</a> also supports x86_64 devices and emulators</>}. Newer APKs install over earlier Android versions and keep your library. See the <a href={androidReleaseUrl}>Android release notes</a> for checksums.</p>}</div>
   </details>
 </section>

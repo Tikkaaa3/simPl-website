@@ -9,8 +9,8 @@ import WhatsNew from '../components/WhatsNew.astro';
 import PageFooter from '../components/PageFooter.astro';
 import { releaseVersion } from '../config/product';
 
-const title = 'simPl — A lightweight, offline reader for Windows';
-const description = 'Read PDF, EPUB, HTML, text and Markdown in a quiet, native Windows reader. Listen with Windows voices, look up words offline, and keep your notes on your own computer. Free for personal and professional use.';
+const title = 'simPl — A lightweight, offline reader for Windows and Android';
+const description = 'Read PDF, EPUB, HTML, text and Markdown in a quiet reader for Windows and Android. Listen along, look up words offline, and keep your notes on your own device. Free for personal and professional use.';
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 ---
 
@@ -38,7 +38,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
         <a class="hero-badge" href="#new"><span class="hero-badge-version">{releaseVersion}</span> <span class="hero-badge-long">Listen, offline word lookup and backups</span><span class="hero-badge-short">See what’s new</span> <span aria-hidden="true">→</span></a>
         <h1 id="hero-title">simPl</h1>
         <p class="hero-description">A lightweight reader.<br />A quiet place for your books.</p>
-        <p class="hero-intro">Read PDF, EPUB, HTML and Markdown on Windows. Listen along,<br class="desktop-break" /> look up a word, and pick up where you left off.</p>
+        <p class="hero-intro">Read PDF, EPUB, HTML and Markdown on Windows and Android. Listen along,<br class="desktop-break" /> look up a word, and pick up where you left off.</p>
         <DownloadButton />
       </section>
       <AppPreview />

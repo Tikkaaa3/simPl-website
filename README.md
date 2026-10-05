@@ -1,6 +1,6 @@
 # simPl website
 
-A minimal, English-only landing page for simPl, a local book reader for Windows.
+A minimal, English-only landing page for simPl, a local book reader for Windows and Android.
 Built with Astro, TypeScript, and CSS. The production page requires no JavaScript,
 backend, external fonts, analytics, or cookies.
 
@@ -28,6 +28,11 @@ download area also links the portable ZIP. Keep `windowsDownloadUrl`,
 `portableDownloadUrl` to `null` to hide the portable link. Set the URL to `null`
 to show the unavailable state. The displayed size is the installer download,
 not the installed application's size.
+
+Android has its own release track (`android-v*` tags). The Android button points
+to the ARM64 APK, and the download area also links the universal APK. Keep
+`androidVersion`, `androidDownloadSize`, and `androidUniversalSize` aligned with
+the Android release; set `androidDownloadUrl` to `null` to hide Android.
 
 You can also host the installer on this site: place the file in `public/`
 (for example `public/simPl-setup.exe`) and set
@@ -118,8 +123,8 @@ live in the reader repository.
 ## Design
 
 Neutral monochrome colors, self-hosted Geist, and a centered composition:
-a release badge, the simPl wordmark, a short product introduction, Windows
-download and source links, a real screenshot gallery, a "New in" section with
+a release badge, the simPl wordmark, a short product introduction, Windows and
+Android download and source links, a real screenshot gallery, a "New in" section with
 alternating close-ups, six feature notes, a compact FAQ, and project/license
 links. The FAQ covers formats, PDF views, Listen, word translation and
 dictionary credits, notes and export, typography, backups, and installation.

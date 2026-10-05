@@ -15,6 +15,17 @@ export const downloadSize = '9.9 MB';
 export const portableDownloadUrl: string | null =
   `${repositoryUrl}/releases/download/v${releaseVersion}/simPl-${releaseVersion}-windows-x64-portable.zip`;
 export const portableSize = '12.4 MB';
+
+/** Android ships on its own release track. Set the URL to null to hide it. */
+export const androidVersion = '0.1.2';
+export const androidReleaseUrl = `${repositoryUrl}/releases/tag/android-v${androidVersion}`;
+export const androidDownloadUrl: string | null =
+  `${repositoryUrl}/releases/download/android-v${androidVersion}/simPl-${androidVersion}-android-arm64.apk`;
+export const androidDownloadSize = '28.7 MB';
+/** The universal APK also contains x86_64. Set to null to hide it. */
+export const androidUniversalUrl: string | null =
+  `${repositoryUrl}/releases/download/android-v${androidVersion}/simPl-${androidVersion}-android-universal.apk`;
+export const androidUniversalSize = '51.5 MB';
 export const sourceLicenseUrl = `${repositoryUrl}/blob/main/LICENSE.md`;
 export const releaseLicenseUrl = `${repositoryUrl}/blob/main/LICENSE-BINARY.txt`;
 
@@ -30,7 +41,7 @@ function isSafeDownloadURL(url: string): boolean {
   }
 }
 
-for (const url of [windowsDownloadUrl, portableDownloadUrl]) {
+for (const url of [windowsDownloadUrl, portableDownloadUrl, androidDownloadUrl, androidUniversalUrl]) {
   if (url && !isSafeDownloadURL(url)) {
     throw new Error(
       'Download URLs must be absolute HTTPS URLs or site-relative paths beginning with a single "/".',
