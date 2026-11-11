@@ -3,7 +3,11 @@ name: Deploy website
 on:
   push:
     branches: [main]
+  # The reader's release workflow starts this when a release is published.
   workflow_dispatch:
+  # A daily rebuild picks up a new reader release even if that trigger fails.
+  schedule:
+    - cron: '17 5 * * *'
 
 permissions:
   contents: read
@@ -37,6 +41,8 @@ jobs:
         run: npm run build
         env:
           SITE_URL: ${{ vars.SITE_URL }}
+          # Reads the reader's public releases without the anonymous rate limit.
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Publish to Cloudflare Workers Static Assets
         if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}

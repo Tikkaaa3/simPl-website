@@ -1,0 +1,106 @@
+---
+import { marked } from 'marked';
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import PageFooter from '../components/PageFooter.astro';
+import { releases } from '../config/releases';
+import { repositoryUrl } from '../config/product';
+
+const title = 'Changelog — simPl';
+const description = 'What changed in each simPl release for Windows and Android.';
+const canonical = Astro.site ? new URL('/changelog/', Astro.site) : undefined;
+
+const dateFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+
+/**
+ * Release notes are written for GitHub. Here the release title is already the
+ * entry's heading, the download list repeats this site's download area, and
+ * the remaining headings move down one level to sit under the entry.
+ */
+function renderNotes(body: string): string {
+  const text = body
+    .replace(/\r\n/g, '\n')
+    .replace(/^# .*\n+/, '')
+    .replace(/^## Downloads\n[\s\S]*?(?=^## |^\[Full changelog\]|(?![\s\S]))/m, '')
+    .replace(/^(#{2,5}) /gm, '$1# ');
+  return marked.parse(text, { async: false, gfm: true });
+}
+
+const entries = releases.map((release) => ({
+  ...release,
+  platform: release.tag.startsWith('android-') ? 'Android' : 'Windows',
+  date: dateFormat.format(new Date(release.publishedAt)),
+  html: renderNotes(release.body),
+}));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="simPl" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <ThemeToggle />
+    <main class="page-shell changelog" id="main">
+      <header class="changelog-header">
+        <a href="/">← simPl home</a>
+        <h1>Changelog</h1>
+        <p>What changed in each release, newest first. <a href="/#download">Download the latest version</a>.</p>
+      </header>
+
+      {entries.length === 0 && (
+        <section class="content-section">
+          <p>The release notes could not be loaded for this build. Read them on <a href={`${repositoryUrl}/releases`}>GitHub Releases</a>.</p>
+        </section>
+      )}
+
+      {entries.map((entry) => (
+        <article class="content-section release" id={entry.tag}>
+          <header>
+            <h2><a href={`#${entry.tag}`}>{entry.name}</a></h2>
+            <p class="release-meta"><span class="release-platform">{entry.platform}</span> {entry.date} <span aria-hidden="true">·</span> <a href={entry.url}>Downloads and checksums</a></p>
+          </header>
+          <div class="release-notes" set:html={entry.html} />
+        </article>
+      ))}
+      <PageFooter />
+    </main>
+  </body>
+</html>
+
+<style>
+  .changelog { max-width: 52rem; align-items: stretch; padding-top: 4.5rem; }
+  .changelog-header > a { color: var(--secondary); font-size: 0.875rem; text-underline-offset: 4px; }
+  .changelog-header h1 { margin: 1.5rem 0 0.75rem; font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 520; line-height: 1.1; letter-spacing: -0.045em; }
+  .changelog-header p { margin: 0; color: var(--secondary); font-size: 0.9375rem; line-height: 1.75; }
+  .changelog-header p a { text-underline-offset: 4px; }
+  .release { scroll-margin-top: 2rem; }
+  .release h2 a { text-decoration: none; }
+  .release h2 a:hover { text-decoration: underline; text-underline-offset: 6px; }
+  .release-meta { margin: 0 0 1.5rem; color: var(--muted); font-size: 0.8125rem; line-height: 1.6; }
+  .release-platform { margin-right: 0.4rem; padding: 0.15rem 0.55rem; border: 1px solid var(--surface-border); border-radius: 999px; color: var(--secondary); font-size: 0.75rem; }
+  .release-notes { max-width: 44rem; color: var(--secondary); font-size: 0.9375rem; line-height: 1.75; }
+  .release-notes :global(h3) { margin: 2rem 0 0.75rem; color: var(--foreground); font-size: 1.0625rem; font-weight: 560; letter-spacing: -0.02em; }
+  .release-notes :global(h4) { margin: 1.5rem 0 0.5rem; color: var(--foreground); font-size: 0.9375rem; font-weight: 560; }
+  .release-notes :global(p) { margin: 0 0 1rem; }
+  .release-notes :global(ul), .release-notes :global(ol) { margin: 0 0 1rem; padding-left: 1.25rem; }
+  .release-notes :global(li + li) { margin-top: 0.65rem; }
+  .release-notes :global(strong) { color: var(--foreground); font-weight: 560; }
+  .release-notes :global(code) { font-size: 0.9em; overflow-wrap: anywhere; }
+  .release-notes :global(a) { text-decoration-color: currentColor; }
+  .release-notes :global(> :first-child) { margin-top: 0; }
+  .release-notes :global(> :last-child) { margin-bottom: 0; }
+</style>

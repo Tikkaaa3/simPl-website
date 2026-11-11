@@ -1,5 +1,5 @@
 ---
-import { windowsDownloadUrl, portableDownloadUrl, portableSize, repositoryUrl, releaseUrl, releaseVersion, downloadSize, releaseLicenseUrl, androidDownloadUrl, androidDownloadSize, androidReleaseUrl, androidVersion, androidUniversalUrl, androidUniversalSize } from '../config/product';
+import { windowsDownloadUrl, releaseUrl, releaseVersion, downloadSize, androidDownloadUrl, androidDownloadSize, androidReleaseUrl, androidVersion } from '../config/product';
 ---
 
 <div class="download" id="download">
@@ -36,29 +36,22 @@ import { windowsDownloadUrl, portableDownloadUrl, portableSize, repositoryUrl, r
       </svg>
     </a>
   )}
-    <a class="source-link" href={repositoryUrl}>View source on GitHub <span aria-hidden="true">↗</span></a>
   </div>
-  {(windowsDownloadUrl || androidDownloadUrl) && <p class="download-terms">Free for personal and professional use <span aria-hidden="true">·</span> <a href={releaseLicenseUrl}>Terms</a></p>}
-  {windowsDownloadUrl
-    ? <p class="download-meta">Windows x64 <span>·</span> <a href={releaseUrl}>v{releaseVersion}</a> <span>·</span> {downloadSize}{portableDownloadUrl && <>{' '}<span>·</span> <span class="nowrap"><a href={portableDownloadUrl} download>Portable ZIP</a> ({portableSize})</span></>}</p>
-    : <p class="download-meta" id="download-status">Windows download not available yet</p>}
-  {androidDownloadUrl && <p class="download-meta">Android 8.0+ ARM64 <span>·</span> <a href={androidReleaseUrl}>v{androidVersion}</a> <span>·</span> {androidDownloadSize}{androidUniversalUrl && <>{' '}<span>·</span> <span class="nowrap"><a href={androidUniversalUrl} download>Universal APK</a> ({androidUniversalSize})</span></>}</p>}
+  {/* One quiet line. Portable ZIP, universal APK, terms and checksums are in the FAQ. */}
+  <p class="download-meta" id="download-status">
+    <span>Free</span>
+    {windowsDownloadUrl
+      ? <span>Windows x64 <a href={releaseUrl}>v{releaseVersion}</a>, {downloadSize}</span>
+      : <span>Windows download not available yet</span>}
+    {androidDownloadUrl && <span>Android 8.0+ <a href={androidReleaseUrl}>v{androidVersion}</a>, {androidDownloadSize}</span>}
+  </p>
 </div>
 
 <style>
   .download { scroll-margin-top: 3rem; }
   .download-actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 1rem 1.5rem; }
-  .source-link { font-size: 0.875rem; text-decoration: none; color: var(--secondary); padding-block: 0.5rem; }
-  .source-link:hover { color: var(--foreground); text-decoration: underline; text-underline-offset: 4px; }
-  .source-link span { margin-left: 0.25rem; }
-  .download-terms { margin: 1rem 0 0; color: var(--secondary); font-size: 0.8125rem; line-height: 1.6; }
-  .download-terms span { padding-inline: 0.35rem; color: var(--muted); }
-  .download-terms a { text-underline-offset: 3px; text-decoration-color: var(--surface-border); }
-  .download-terms a:hover { color: var(--foreground); text-decoration-color: currentColor; }
-  .download-meta { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.6; }
-  .download-actions + .download-meta { margin-top: 1rem; }
-  .download-meta span:not(.nowrap) { padding-inline: 0.35rem; }
-  .nowrap { white-space: nowrap; }
+  .download-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.15rem 0; margin: 1.1rem 0 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.6; }
+  .download-meta span + span::before { content: '·'; padding-inline: 0.6rem; }
   .download-meta a { text-underline-offset: 3px; text-decoration-color: var(--surface-border); }
   .download-meta a:hover { color: var(--foreground); text-decoration-color: currentColor; }
   .download-button {

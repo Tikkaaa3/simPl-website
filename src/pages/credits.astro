@@ -14,7 +14,8 @@ const canonical = Astro.site ? new URL('/credits/', Astro.site) : undefined;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0c0c0c" />
+    <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="color-scheme" content="dark light" />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />

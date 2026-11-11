@@ -5,56 +5,20 @@ import readingDark from '../assets/screens/reading-default-dark.webp';
 import readingLight from '../assets/screens/reading-default-light.webp';
 import libraryDark from '../assets/screens/library-dark.webp';
 import libraryLight from '../assets/screens/library-light.webp';
-import softDark from '../assets/screens/reading-soft-dark.webp';
-import softLight from '../assets/screens/reading-soft-light.webp';
-import clearDark from '../assets/screens/reading-clear-dark.webp';
-import clearLight from '../assets/screens/reading-clear-light.webp';
-import compactDark from '../assets/screens/reading-compact-dark.webp';
-import compactLight from '../assets/screens/reading-compact-light.webp';
-import notesShot from '../assets/screens/notes-highlights.webp';
-import pdfDocument from '../assets/screens/pdf-document.webp';
-import pdfBook from '../assets/screens/pdf-book.webp';
+import pdfDocumentDark from '../assets/screens/pdf-document-dark.webp';
+import pdfDocumentLight from '../assets/screens/pdf-document-light.webp';
+import pdfBookDark from '../assets/screens/pdf-book-dark.webp';
+import pdfBookLight from '../assets/screens/pdf-book-light.webp';
 
 // A shot with a `light` variant follows the page's light/dark toggle.
 type Shot = { dark: ImageMetadata; light?: ImageMetadata; alt: string; name?: string };
-type Slide = { label: string; caption: string; shots: Shot[] };
+type Slide = { label: string; shots: Shot[] };
 
 const slides: Slide[] = [
-  {
-    label: 'Reading',
-    caption: 'A quiet page, comfortable type, and your place saved for next time.',
-    shots: [{ dark: readingDark, light: readingLight, alt: 'A book open in simPl’s reading view, with Find, Listen and zoom in the toolbar' }],
-  },
-  {
-    label: 'Library',
-    caption: 'Continue Reading, favourites and your own shelves, all in one local library.',
-    shots: [{ dark: libraryDark, light: libraryLight, alt: 'The simPl library with Continue Reading cards, shelves and sorting' }],
-  },
-  {
-    label: 'Themes',
-    caption: 'Default, Soft, Clear and Compact. Each sets its own font, spacing and colors, in light or dark.',
-    shots: [
-      { dark: readingDark, light: readingLight, alt: 'The Default reading theme', name: 'Default' },
-      { dark: softDark, light: softLight, alt: 'The Soft reading theme', name: 'Soft' },
-      { dark: clearDark, light: clearLight, alt: 'The Clear reading theme', name: 'Clear' },
-      { dark: compactDark, light: compactLight, alt: 'The Compact reading theme', name: 'Compact' },
-    ],
-  },
-  {
-    label: 'Notes',
-    caption: 'Highlight a passage, add a note or bookmark a page. Everything waits in the sidebar.',
-    shots: [{ dark: notesShot, alt: 'A highlighted passage with its note in the bookmarks and notes sidebar' }],
-  },
-  {
-    label: 'PDF',
-    caption: 'Document view keeps the original page, typography and artwork.',
-    shots: [{ dark: pdfDocument, alt: 'A PDF page shown in Document view with its original layout' }],
-  },
-  {
-    label: 'PDF as book',
-    caption: 'Book view reflows the same PDF into simPl’s quieter reading style.',
-    shots: [{ dark: pdfBook, alt: 'The same PDF reflowed in Book view' }],
-  },
+  { label: 'Reading', shots: [{ dark: readingDark, light: readingLight, alt: 'A book open in simPl’s reading view, with only the title bar above the page' }] },
+  { label: 'Library', shots: [{ dark: libraryDark, light: libraryLight, alt: 'The simPl library with Continue Reading cards, shelves and sorting' }] },
+  { label: 'PDF', shots: [{ dark: pdfDocumentDark, light: pdfDocumentLight, alt: 'A PDF page shown in Document view with its original layout' }] },
+  { label: 'PDF as book', shots: [{ dark: pdfBookDark, light: pdfBookLight, alt: 'The same PDF reflowed in Book view' }] },
 ];
 ---
 
@@ -87,7 +51,6 @@ const slides: Slide[] = [
           );
         })}
       </div>
-      <figcaption>{slide.caption}</figcaption>
     </figure>
   ))}
 </section>
@@ -126,9 +89,7 @@ const slides: Slide[] = [
   .app-preview:has(#app-preview-1:checked) #preview-panel-1,
   .app-preview:has(#app-preview-2:checked) #preview-panel-2,
   .app-preview:has(#app-preview-3:checked) #preview-panel-3,
-  .app-preview:has(#app-preview-4:checked) #preview-panel-4,
-  .app-preview:has(#app-preview-5:checked) #preview-panel-5,
-  .app-preview:has(#app-preview-6:checked) #preview-panel-6 { display: block; animation: preview-in 260ms ease; }
+  .app-preview:has(#app-preview-4:checked) #preview-panel-4 { display: block; animation: preview-in 260ms ease; }
   .preview-frame {
     border: 1px solid var(--surface-border);
     border-radius: 0.875rem;
@@ -139,9 +100,6 @@ const slides: Slide[] = [
   .preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--surface-border); }
   .shot { position: relative; }
   .shot img { display: block; width: 100%; height: auto; }
-  .shot-light { display: none !important; }
-  :global(html:has(#theme-toggle:checked)) .shot-dark { display: none !important; }
-  :global(html:has(#theme-toggle:checked)) .shot-light { display: block !important; }
   .shot-name {
     position: absolute;
     left: 0.75rem;
@@ -153,7 +111,6 @@ const slides: Slide[] = [
     color: var(--foreground);
     font-size: 0.75rem;
   }
-  figcaption { min-height: 3rem; margin-top: 1rem; color: var(--secondary); font-size: 0.8125rem; line-height: 1.6; text-align: center; text-wrap: balance; }
   @keyframes preview-in { from { opacity: 0; } to { opacity: 1; } }
   @media (max-width: 42rem) {
     .preview-picker { justify-content: flex-start; }

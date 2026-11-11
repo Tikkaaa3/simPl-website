@@ -6,12 +6,31 @@ import Features from '../components/Features.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import ReaderDetails from '../components/ReaderDetails.astro';
 import WhatsNew from '../components/WhatsNew.astro';
+import WhatItDoes from '../components/WhatItDoes.astro';
 import PageFooter from '../components/PageFooter.astro';
-import { releaseVersion } from '../config/product';
+import { releaseVersion, featuredVersion, windowsDownloadUrl, downloadSize, repositoryUrl } from '../config/product';
 
 const title = 'simPl — A lightweight, offline reader for Windows and Android';
 const description = 'Read PDF, EPUB, HTML, text and Markdown in a quiet reader for Windows and Android. Listen along, look up words offline, and keep your notes on your own device. Free for personal and professional use.';
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const socialImage = Astro.site ? new URL('/og.png', Astro.site) : undefined;
+// The badge only names the highlights while the newest release is the one they describe.
+const describesLatest = releaseVersion === featuredVersion;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'simPl',
+  description,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Windows 10, Windows 11, Android 8.0',
+  softwareVersion: releaseVersion,
+  fileSize: downloadSize,
+  ...(windowsDownloadUrl ? { downloadUrl: windowsDownloadUrl } : {}),
+  ...(canonical ? { url: canonical.href } : {}),
+  ...(socialImage ? { screenshot: socialImage.href } : {}),
+  codeRepository: repositoryUrl,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
 ---
 
 <!doctype html>
@@ -19,7 +38,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0c0c0c" />
+    <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="color-scheme" content="dark light" />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
@@ -28,6 +48,12 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     <meta property="og:description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     {canonical && <meta property="og:url" content={canonical} />}
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    {socialImage && <meta property="og:image:width" content="1200" />}
+    {socialImage && <meta property="og:image:height" content="630" />}
+    {socialImage && <meta property="og:image:alt" content="simPl, a lightweight reader, with a book open in its reading view" />}
+    <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
@@ -35,14 +61,15 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     <ThemeToggle />
     <main class="page-shell" id="main">
       <section class="hero" aria-labelledby="hero-title">
-        <a class="hero-badge" href="#new"><span class="hero-badge-version">{releaseVersion}</span> <span class="hero-badge-long">Listen, offline word lookup and backups</span><span class="hero-badge-short">See what’s new</span> <span aria-hidden="true">→</span></a>
+        <a class="hero-badge" href={describesLatest ? '#new' : '/changelog/'}><span class="hero-badge-version">{releaseVersion}</span> What’s new <span aria-hidden="true">→</span></a>
         <h1 id="hero-title">simPl</h1>
         <p class="hero-description">A lightweight reader.<br />A quiet place for your books.</p>
-        <p class="hero-intro">Read PDF, EPUB, HTML and Markdown on Windows and Android. Listen along,<br class="desktop-break" /> look up a word, and pick up where you left off.</p>
+        <p class="hero-intro">PDF, EPUB, HTML and Markdown. Windows and Android.</p>
         <DownloadButton />
       </section>
       <AppPreview />
       <WhatsNew />
+      <WhatItDoes />
       <Features />
       <ReaderDetails />
       <PageFooter />

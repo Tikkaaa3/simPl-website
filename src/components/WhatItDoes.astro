@@ -1,0 +1,44 @@
+---
+import FeatureRows, { type FeatureRow } from './FeatureRows.astro';
+import listenShot from '../assets/screens/crop-listen.webp';
+import translateShot from '../assets/screens/crop-translate.webp';
+import backupShot from '../assets/screens/crop-backup.webp';
+import listenDark from '../assets/screens/crop-listen-dark.webp';
+import translateDark from '../assets/screens/crop-translate-dark.webp';
+import backupDark from '../assets/screens/crop-backup-dark.webp';
+
+// The lasting reasons to use simPl, one sentence each. Release news belongs in
+// WhatsNew.astro and details in the FAQ.
+const items: FeatureRow[] = [
+  {
+    title: 'Let the book read to you.',
+    body: 'Press Listen and simPl reads on, page after page, with the voices already in Windows.',
+    src: listenShot,
+    dark: listenDark,
+    alt: 'Listen paused in the middle of a sentence, with the spoken word marked and the speed controls at the bottom of the page',
+  },
+  {
+    title: 'Look up a word without leaving the page.',
+    body: 'Double-click a word to see its meaning, from dictionaries that stay on your computer.',
+    src: translateShot,
+    dark: translateDark,
+    alt: 'An English → Turkish dictionary card open over the word “book” in a highlighted sentence',
+    id: 'word-translation',
+    credit: true,
+  },
+  {
+    title: 'Keep your library and your notes.',
+    body: 'Back up your books, positions and highlights, and export your notes as Markdown, text or JSON.',
+    src: backupShot,
+    dark: backupDark,
+    alt: 'Library & data settings with the library folder, backup options and note export formats',
+  },
+];
+---
+
+<section class="page-section" id="features" aria-labelledby="does-title">
+  <header class="section-head">
+    <h2 id="does-title">Read, listen and look things up.</h2>
+  </header>
+  <FeatureRows items={items} />
+</section>
