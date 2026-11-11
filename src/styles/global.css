@@ -7,22 +7,23 @@
 }
 
 :root {
-  color-scheme: dark;
-  /* Brand palette (dark is the reference). */
-  --background: #0c0c0c;
-  --foreground: #ededed;
-  --secondary: #b5b5b5;
-  --muted: #858585;
-  --surface: #101010;
-  --surface-border: #272727;
-  --button-background: #e5e5e5;
-  --button-foreground: #171717;
-  --button-border: #e5e5e5;
-  --button-background-hover: #ffffff;
-  --control-background: #161616;
-  --control-border: #2a2a2a;
-  --frame-shadow: 0 1.5rem 4rem -1.5rem rgb(0 0 0 / 0.7);
-  --glow: rgb(255 255 255 / 0.06);
+  /* Follows the visitor's system appearance; the toggle switches to the other one. */
+  color-scheme: light dark;
+  /* Brand palette as light-dark(light, dark). Dark is the reference. */
+  --background: light-dark(#ffffff, #0c0c0c);
+  --foreground: light-dark(#101010, #ededed);
+  --secondary: light-dark(#525252, #b5b5b5);
+  --muted: light-dark(#737373, #858585);
+  --surface: light-dark(#f6f6f6, #101010);
+  --surface-border: light-dark(#e5e5e5, #272727);
+  --button-background: light-dark(#171717, #e5e5e5);
+  --button-foreground: light-dark(#f5f5f5, #171717);
+  --button-border: light-dark(#171717, #e5e5e5);
+  --button-background-hover: light-dark(#000000, #ffffff);
+  --control-background: light-dark(#ffffff, #161616);
+  --control-border: light-dark(#e2e2e2, #2a2a2a);
+  --frame-shadow: 0 1.5rem 4rem -1.5rem light-dark(rgb(0 0 0 / 0.22), rgb(0 0 0 / 0.7));
+  --glow: light-dark(rgb(0 0 0 / 0.04), rgb(255 255 255 / 0.06));
   font-family: 'Geist Variable', 'Segoe UI', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,23 +32,22 @@
   color: var(--foreground);
 }
 
-/* Light appearance, engaged by the theme toggle. */
-html:has(#theme-toggle:checked) {
-  color-scheme: light;
-  --background: #ffffff;
-  --foreground: #101010;
-  --secondary: #525252;
-  --muted: #737373;
-  --surface: #f6f6f6;
-  --surface-border: #e5e5e5;
-  --button-background: #171717;
-  --button-foreground: #f5f5f5;
-  --button-border: #171717;
-  --button-background-hover: #000000;
-  --control-background: #ffffff;
-  --control-border: #e2e2e2;
-  --frame-shadow: 0 1.5rem 3.5rem -1.75rem rgb(0 0 0 / 0.22);
-  --glow: rgb(0 0 0 / 0.04);
+/* The toggle engages the appearance the system did not choose. */
+html:has(#theme-toggle:checked) { color-scheme: light; }
+@media (prefers-color-scheme: light) {
+  html:has(#theme-toggle:checked) { color-scheme: dark; }
+}
+
+/* A screenshot with both captures shows the one that matches the page. Light is
+   showing by the toggle on a dark system, or untouched on a light one. */
+.shot-light { display: none !important; }
+@media not (prefers-color-scheme: light) {
+  html:has(#theme-toggle:checked) .shot-dark { display: none !important; }
+  html:has(#theme-toggle:checked) .shot-light { display: block !important; }
+}
+@media (prefers-color-scheme: light) {
+  html:not(:has(#theme-toggle:checked)) .shot-dark { display: none !important; }
+  html:not(:has(#theme-toggle:checked)) .shot-light { display: block !important; }
 }
 
 * { box-sizing: border-box; }
@@ -95,7 +95,6 @@ svg { flex-shrink: 0; }
   text-decoration: none;
   transition: border-color 140ms ease, color 140ms ease;
 }
-.hero-badge-short { display: none; }
 .hero-badge:hover { border-color: var(--muted); color: var(--foreground); }
 .hero-badge-version {
   padding: 0.15rem 0.5rem;
@@ -120,34 +119,28 @@ svg { flex-shrink: 0; }
   line-height: 1.3;
   letter-spacing: -0.035em;
 }
-.hero-intro { margin: 0 auto 1.75rem; max-width: 35rem; color: var(--secondary); font-size: 0.9375rem; line-height: 1.7; text-wrap: pretty; }
+.hero-intro { margin: 0 auto 2rem; max-width: 35rem; color: var(--secondary); font-size: 0.9375rem; line-height: 1.7; text-wrap: pretty; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
-.features {
-  width: 100%;
-  max-width: 52rem;
-  border-top: 1px solid var(--surface-border);
-  padding-top: clamp(2rem, 5vw, 3rem);
-}
-.features-title {
-  max-width: 26rem;
-  margin: 0 0 clamp(1.5rem, 4vw, 2.25rem);
-  font-size: clamp(1.5rem, 3vw, 1.875rem);
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
-}
+/* Sections are separated by space alone; the only rule sits above the footer. */
+.page-section { width: 100%; max-width: 52rem; padding-top: clamp(2.5rem, 7vw, 4.5rem); scroll-margin-top: 2rem; }
+.section-head { margin: 0 auto clamp(2rem, 5vw, 3rem); text-align: center; }
+.section-head h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 520; line-height: 1.2; letter-spacing: -0.04em; text-wrap: balance; }
+.section-head p { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.8125rem; }
+.section-head a { text-underline-offset: 4px; text-decoration-color: var(--surface-border); }
+.section-head a:hover { color: var(--foreground); text-decoration-color: currentColor; }
+
 .features ul {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.25rem, 3vw, 2.5rem);
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
   margin: 0;
   padding: 0;
   list-style: none;
+  text-align: center;
 }
 .features h3 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.4rem;
   font-size: 0.9375rem;
   font-weight: 560;
   letter-spacing: -0.01em;
@@ -157,13 +150,15 @@ svg { flex-shrink: 0; }
   color: var(--secondary);
   font-size: 0.875rem;
   line-height: 1.55;
+  text-wrap: balance;
 }
 
 .page-footer {
   width: 100%;
   max-width: 52rem;
-  margin-top: auto;
-  padding-top: 1.5rem;
+  margin-top: clamp(2.5rem, 7vw, 4.5rem);
+  border-top: 1px solid var(--surface-border);
+  padding-top: 2rem;
   color: var(--muted);
   font-size: 0.8125rem;
   text-align: center;
@@ -172,16 +167,18 @@ svg { flex-shrink: 0; }
 .page-footer .page-copyright { margin: 1.25rem 0 0; font-size: 0.75rem; }
 .page-footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 1.5rem; }
 .page-footer a { padding-block: 0.5rem; }
-.features a, .content-section a, .page-footer a { text-underline-offset: 4px; text-decoration-color: var(--surface-border); }
-.features a:hover, .content-section a:hover, .page-footer a:hover { color: var(--foreground); text-decoration-color: currentColor; }
+.features a, .content-section a, .faq a, .page-footer a { text-underline-offset: 4px; text-decoration-color: var(--surface-border); }
+.features a:hover, .content-section a:hover, .faq a:hover, .page-footer a:hover { color: var(--foreground); text-decoration-color: currentColor; }
 .content-section { width: 100%; max-width: 52rem; border-top: 1px solid var(--surface-border); padding-top: clamp(2rem, 5vw, 3rem); }
 .content-section h2 { margin: 0 0 0.65rem; font-size: clamp(1.5rem, 3vw, 1.875rem); font-weight: 500; letter-spacing: -0.04em; }
 details summary { cursor: pointer; padding: 1.2rem 0; font-size: 0.875rem; line-height: 1.6; }
 details summary:hover { color: var(--secondary); }
-.details-body { padding: 0 0 1rem; max-width: 44rem; color: var(--secondary); font-size: 0.875rem; line-height: 1.75; }
+.details-body { padding: 0 0 1.2rem; max-width: 44rem; color: var(--secondary); font-size: 0.875rem; line-height: 1.75; }
 .details-body p { margin: 0 0 0.8rem; }
 .details-body p:last-child { margin-bottom: 0; }
-.faq h2 { margin-bottom: 1rem; }
+.faq details { scroll-margin-top: 2rem; }
+.details-body code { font-size: 0.9em; }
+.details-body .hash { overflow-wrap: anywhere; color: var(--foreground); }
 .faq details { border-bottom: 1px solid var(--surface-border); }
 details summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 details summary::-webkit-details-marker { display: none; }
@@ -235,8 +232,15 @@ kbd {
 }
 .theme-toggle-icon { grid-area: 1 / 1; }
 .theme-toggle .icon-sun { display: none; }
-html:has(#theme-toggle:checked) .theme-toggle .icon-moon { display: none; }
-html:has(#theme-toggle:checked) .theme-toggle .icon-sun { display: block; }
+/* Light is showing: by the toggle on a dark system, or untouched on a light one. */
+@media not (prefers-color-scheme: light) {
+  html:has(#theme-toggle:checked) .theme-toggle .icon-moon { display: none; }
+  html:has(#theme-toggle:checked) .theme-toggle .icon-sun { display: block; }
+}
+@media (prefers-color-scheme: light) {
+  html:not(:has(#theme-toggle:checked)) .theme-toggle .icon-moon { display: none; }
+  html:not(:has(#theme-toggle:checked)) .theme-toggle .icon-sun { display: block; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .theme-toggle, .hero-badge, details summary::after { transition: none; }
@@ -246,8 +250,5 @@ html:has(#theme-toggle:checked) .theme-toggle .icon-sun { display: block; }
   .page-shell { padding-bottom: 2rem; }
   .hero h1 { font-size: clamp(5.5rem, 25vw, 8rem); }
   .hero-description { font-size: 1.5rem; }
-  .hero-badge-long { display: none; }
-  .hero-badge-short { display: inline; }
-  .desktop-break { display: none; }
-  .features ul { grid-template-columns: 1fr; gap: 1.25rem; }
+  .features ul { grid-template-columns: 1fr 1fr; gap: 1.75rem 1.25rem; }
 }

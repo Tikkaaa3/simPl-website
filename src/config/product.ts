@@ -1,20 +1,51 @@
-/**
- * Set this to the Windows installer location when it is available:
- * an absolute HTTPS URL, or a site-relative path such as
- * `/simPl-setup.exe` for a file placed in `public/`.
- */
-export const windowsDownloadUrl: string | null =
-  'https://github.com/Tikkaaa3/simPl-reader/releases/download/v0.1.5/simPl-0.1.5-windows-x64-setup.exe';
+import { latestWindowsRelease } from './releases';
 
 export const repositoryUrl = 'https://github.com/Tikkaaa3/simPl-reader';
-export const releaseVersion = '0.1.5';
+
+/**
+ * The Windows release is read from GitHub when the site builds (see
+ * `releases.ts`). These pinned values are the fallback for a build that can't
+ * reach GitHub; update them when you want the fallback to move.
+ */
+const pinned = {
+  version: '0.1.7',
+  installerBytes: 10_080_936,
+  installerSha256: '78ef294c7cfdfeff66dc22f671e842489e7937c9fc6ad2951cd59f5d8247fabe',
+  portableBytes: 12_698_834,
+};
+
+const megabytes = (bytes: number) => `${(bytes / 1_000_000).toFixed(1)} MB`;
+const liveVersion = latestWindowsRelease?.tag.slice(1);
+const installer = latestWindowsRelease?.assets.find((asset) => asset.name === `simPl-${liveVersion}-windows-x64-setup.exe`);
+const portable = latestWindowsRelease?.assets.find((asset) => asset.name === `simPl-${liveVersion}-windows-x64-portable.zip`);
+// A release without its installer is still being published: stay on the pinned one.
+const live = installer ? liveVersion : undefined;
+
+export const releaseVersion = live ?? pinned.version;
+/**
+ * The release the "New in" section was written for. Set by hand on purpose:
+ * the download follows the newest release by itself, and that copy must not
+ * claim to describe a release it was not written for.
+ */
+export const featuredVersion = '0.1.7';
 export const releaseUrl = `${repositoryUrl}/releases/tag/v${releaseVersion}`;
-export const downloadSize = '9.9 MB';
+
+/**
+ * The Windows installer. Set to null to show the unavailable state. A
+ * site-relative path such as `/simPl-setup.exe` (a file in `public/`) also works.
+ */
+export const windowsDownloadUrl: string | null =
+  `${repositoryUrl}/releases/download/v${releaseVersion}/simPl-${releaseVersion}-windows-x64-setup.exe`;
+export const downloadSize = megabytes(live && installer ? installer.bytes : pinned.installerBytes);
+/** Shown so a download can be checked against the release. */
+export const installerSha256: string | null = live ? (installer?.sha256 ?? null) : pinned.installerSha256;
 
 /** The portable build: extract the folder and run simPl.exe. Set to null to hide it. */
 export const portableDownloadUrl: string | null =
-  `${repositoryUrl}/releases/download/v${releaseVersion}/simPl-${releaseVersion}-windows-x64-portable.zip`;
-export const portableSize = '12.4 MB';
+  !live || portable
+    ? `${repositoryUrl}/releases/download/v${releaseVersion}/simPl-${releaseVersion}-windows-x64-portable.zip`
+    : null;
+export const portableSize = megabytes(live && portable ? portable.bytes : pinned.portableBytes);
 
 /** Android ships on its own release track. Set the URL to null to hide it. */
 export const androidVersion = '0.1.2';

@@ -1,0 +1,37 @@
+---
+// A fixed address for the newest Windows installer, for links outside this
+// site: /download/windows/ always forwards to the current release's file.
+import '../../styles/global.css';
+import { windowsDownloadUrl, releaseVersion, downloadSize } from '../../config/product';
+
+const title = 'Download simPl for Windows';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="robots" content="noindex" />
+    {windowsDownloadUrl && <meta http-equiv="refresh" content={`0; url=${windowsDownloadUrl}`} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main class="page-shell download-page" id="main">
+      <h1>simPl {releaseVersion} for Windows</h1>
+      {windowsDownloadUrl
+        ? <p>Your download should start in a moment. If it doesn’t, <a href={windowsDownloadUrl} download>download the installer</a> ({downloadSize}).</p>
+        : <p>The Windows download is not available yet.</p>}
+      <p><a href="/">← simPl home</a></p>
+    </main>
+  </body>
+</html>
+
+<style>
+  .download-page { justify-content: center; text-align: center; }
+  .download-page h1 { margin: 0; font-size: clamp(1.75rem, 4.2vw, 2.5rem); font-weight: 520; letter-spacing: -0.045em; }
+  .download-page p { margin: 0; color: var(--secondary); font-size: 0.9375rem; line-height: 1.7; }
+  .download-page a { text-underline-offset: 4px; }
+</style>

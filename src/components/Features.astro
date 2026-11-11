@@ -1,33 +1,27 @@
 ---
-import { repositoryUrl, downloadSize } from '../config/product';
+import { repositoryUrl, downloadSize, releaseLicenseUrl } from '../config/product';
 ---
 
-<section class="features" aria-labelledby="features-title">
-  <h2 id="features-title" class="features-title">Everything else you’d expect, and nothing you don’t.</h2>
+<section class="page-section features" aria-labelledby="features-title">
+  <header class="section-head">
+    <h2 id="features-title">And nothing you don’t need.</h2>
+  </header>
   <ul>
     <li>
-      <h3>Lightweight by design</h3>
-      <p>A native reader for Windows and Android. The Windows app is a {downloadSize} download built with Rust that opens quickly and stays out of the way.</p>
+      <h3>Lightweight</h3>
+      <p>A native {downloadSize} download that opens quickly.</p>
     </li>
     <li>
       <h3>Local and offline</h3>
-      <p>Your books, notes and reading progress stay on your device. No account. Nothing to upload.</p>
+      <p>No account. Your books and notes stay on your device.</p>
     </li>
     <li>
-      <h3>Four reading themes</h3>
-      <p>Default, Soft, Clear or Compact, in light or dark. Every font is bundled, so nothing is downloaded.</p>
+      <h3>Shelves</h3>
+      <p>Group, filter and sort your books your way.</p>
     </li>
     <li>
-      <h3>Shelves for your books</h3>
-      <p>Group books into your own shelves, then filter and sort. Favourites and Continue Reading are always close.</p>
-    </li>
-    <li>
-      <h3>Find in the book</h3>
-      <p>Search inside PDF, EPUB and HTML with Ctrl+F and jump straight to each match.</p>
-    </li>
-    <li>
-      <h3>Source-available</h3>
-      <p>See how your reader works. The code is <a href={repositoryUrl}>on GitHub</a>.</p>
+      <h3>Free and open to read</h3>
+      <p><a href={releaseLicenseUrl}>Free to use</a>, at home and at work. The code is <a href={repositoryUrl}>on GitHub</a>.</p>
     </li>
   </ul>
 </section>
